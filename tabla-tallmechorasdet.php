@@ -173,7 +173,6 @@ try{
                     'sSortDescending': ': Activar para ordenar la columna de manera descendente'
                 },
             'scrollY': '50vh',
-            'scrollX': true,
             'paging': false
             }
         } );
