@@ -27,8 +27,8 @@ try{
         //Invocación al web service
         $WS = new SoapClient($WebService, $parametros);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->VtasNetasDRF($parametros);
-        $xml = $result->VtasNetasDRFResult->any;
+        $result = $WS->VtasNetasREF($parametros);
+        $xml = $result->VtasNetasREFResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
     }
@@ -38,7 +38,7 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='gridfact' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tfoot></table></div>";
+        <table id='gridfact' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tfoot></table></div>";
 
 	$arreglo = [];
 	for($i=0; $i<count($Datos); $i++){
@@ -212,15 +212,15 @@ try{
             };
             // Total over all pages
             total_total = api_total
-                .column( 10 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
             // Update footer
-            $( api_total.column( 10 ).footer() ).html('$'+ total_total.toFixed(2) );
-            $("#TotalFac").empty();
+            $( api_total.column( 7 ).footer() ).html('$'+ total_total.toFixed(2) );
+
             $("#TotalFac").append('$' + total_total.toFixed(2) + ' TOTAL');
             
         }

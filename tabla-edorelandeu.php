@@ -28,6 +28,9 @@ try{
         //ini_set("soap.wsdl_cache_enabled", "0");
         //Invocación al web service
         $WS = new SoapClient($WebService, $parametros);
+        //recibimos la respuesta dentro de un objeto
+        //$result = $WS->Edoresultados($parametros);
+        //$xml = $result->EdoresultadosResult->any;
         $result = $WS->edorelaciondeudores($parametros);
         $xml = $result->edorelaciondeudoresResult->any;
         $obj = simplexml_load_string($xml);

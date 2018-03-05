@@ -203,10 +203,10 @@
         echo '<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">';
         echo '<link rel="stylesheet" type="text/css" href="css/buttons.dataTables.min.css">';
         echo '<link rel="stylesheet" type="text/css" href="css/PushMenu.css">';
-        echo '<link rel="shortcut icon" href="favicon.ico">';
         echo '<link rel="stylesheet" type="text/css" href="css/ThemeBlue.css"  />';
         echo '<link rel="stylesheet" type="text/css" href="css/barratareas.css"  />';
         echo '<link rel="stylesheet" type="text/css" href="css/CargaGif.css"  />';
+        echo '<link rel="shortcut icon" href="favicon.ico">';
         echo '</head>';
     }
 
@@ -747,9 +747,7 @@ function GrdRptShort($sGridNomb,$sWsNomb,$aColumnas,$aTitulos){
     }
 
     function CargaGif(){
-        $Grd = "<div id='CargaGif' class='lds-css ng-scope'><div style='width:100%;height:100%' class='lds-double-ring'><div></div><div></div></div></div>";
-
-        return $Grd;
+        echo "<div id='CargaGif' class='lds-css ng-scope'><div style='width:100%;height:100%' class='lds-double-ring'><div></div><div></div></div></div>";
     }
 
     function Webservice(){

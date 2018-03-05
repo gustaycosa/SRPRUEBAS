@@ -38,7 +38,7 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='gridfact' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tfoot></table></div>";
+        <table id='gridfact' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tfoot></table></div>";
 
 	$arreglo = [];
 	for($i=0; $i<count($Datos); $i++){
@@ -220,7 +220,7 @@ try{
 
             // Update footer
             $( api_total.column( 7 ).footer() ).html('$'+ total_total.toFixed(2) );
-            $("#TotalFac").empty();
+
             $("#TotalFac").append('$' + total_total.toFixed(2) + ' TOTAL');
             
         }
