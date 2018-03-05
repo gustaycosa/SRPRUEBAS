@@ -1,0 +1,87 @@
+<table 
+  style="font-family: arial; 
+         font-size: 14px;
+         background-color: #f5f5f5"
+ >
+  <tr>
+    <td style="padding: 5px 0 5px 5px">
+      <img
+         src="http://escueladigital.pe/sites/default/files/styles/thumbnail_s100x100/public/avatars/alvaro.jpg" 
+         alt="" 
+         width="80" 
+         height="80" 
+         style="display:block; margin-right: 5px; border-radius: 50%"
+       >
+    </td>
+    <td 
+      style="vertical-align:top; 
+             padding:5px 5px 5px 10px; 
+             border-left: 4px solid steelblue"
+    >
+      <strong 
+        style="font-size:1.2em; 
+               display: block; 
+               margin-bottom: 3px; 
+               color: steelblue"
+      >
+        Álvaro Felipe Chávez
+      </strong>
+      <p 
+        style="font-size:0.9em; 
+               margin: 0; 
+               color: #666"
+      >
+      Escuela Digital Team Leader 
+      <br />
+      <a 
+         href="http://escuela.digital" 
+         style="display:block;
+                text-decoration: none;
+                margin-bottom: 8px; 
+                color: steelblue"
+       >
+        http://escuela.digital
+      </a>
+        <a 
+         href="http://escuela.digital/facebook" 
+         style="display:inline-block;
+                background-color:#365899;
+                color:#ffffff;
+                text-decoration:none; 
+                line-height:19px; 
+                height: 18px;
+                padding: 0 10px; 
+                font-size: 12px"
+       >
+        Facebook
+      </a>
+      <a 
+         href="http://escuela.digital/youtube" 
+         style="display:inline-block;
+                background-color:#CC181E;
+                color:#ffffff;
+                text-decoration:none; 
+                line-height:19px; 
+                height: 18px;
+                padding: 0 10px; 
+                font-size: 12px"
+       >
+        YouTube
+      </a>
+      <a 
+         href="http://escuela.digital/twitter" 
+         style="display:inline-block;
+                background-color:#1B9AE8;
+                color:#ffffff;
+                text-decoration:none; 
+                line-height:19px; 
+                height: 18px;
+                padding: 0 10px; 
+                font-size: 12px"
+       >
+        Twitter
+      </a>
+      </p>
+    </td>
+  </tr>
+</table>
