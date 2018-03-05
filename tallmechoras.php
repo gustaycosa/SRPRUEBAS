@@ -128,6 +128,7 @@
                     $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
                     $("#DivMdlMaqDet").show();
                     $('#MdlMaqDet').modal('show')
+                    $('#gridfact').DataTable().draw();
                 },
                 error: function(error) {
                     $('#CargaGif').hide();

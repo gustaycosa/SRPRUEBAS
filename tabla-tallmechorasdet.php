@@ -27,7 +27,7 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='gridfact' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
+        <table id='gridfact' class='table table-striped table-bordered table-condensed table-hover compact' cellspacing='0' width='100%' ></table></div>";
 
 	$arreglo = [];
 	for($i=0; $i<count($Datos); $i++){
@@ -70,8 +70,10 @@ try{
                 { 'title': 'Horas', 'targets': 4},
                 { 'title': 'Fecha', 'targets': 5}
             ],
+            ordering: false,
+            scrollY:        '50vh',
+            scrollCollapse: true,
             dom: 'lfBrtip',    
-            paging: false,
             searching: true,
             ordering: false,
             buttons: [
@@ -147,7 +149,6 @@ try{
                     }
                 },
             ],
-            'pagingType': 'full_numbers',
             'lengthMenu': [[-1], ['Todo']],
             'language': {
                 'sProcessing':    'Procesando...',
@@ -171,10 +172,11 @@ try{
                 'oAria': {
                     'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
                     'sSortDescending': ': Activar para ordenar la columna de manera descendente'
-                },
-            'scrollY': '50vh',
-            'paging': false
-            }
+                }
+            },
+            scrollY:        '50vh',
+            scrollCollapse: true,
+            paging:         false,
         } );
     } );
     </script>
