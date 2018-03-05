@@ -1,7 +1,0 @@
-    //echo AjaxSubmit("#Controles","ModElemento.php","#Controles",".controles"); 
-    //echo AjaxSubmit("#ControlesForm","NvoElemento.php","#ControlesForm",".controles"); 
-    /*echo Oculta(".identificador","#ControlesModificar","1");*/
-    //echo AjaxClic("#btnModificar","ModElemento.php","#Controles",".controles"); 
-    //btnModificar
-    
-              data: '{txtUsuario: $("#txtUsuario").val(),txtNombre: $("#txtNombre").val(),txtCelular: $("#txtCelular").val(),txtEmpresa:$("#txtEmpresa").val(),txtGrupo: $("#CmbGrupos").val(),txtPerfil: $("#Cmbperfiles").val(),            txtCorreo: $("#txtCorreo").val(),txtUsuarioFUM: $("#txtUsuarioFUM").val()}',

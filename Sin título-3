@@ -1,9 +1,0 @@
-<?php 
-
-    echo AjaxClic("#BtnConsultar","tabla.php","#formulario",".respuesta"); 
-    /*
-    echo Oculta("#BtnRefrescar","#Controles","1");
-    echo Oculta("#BtnCancel","#Controles","2");    
-    echo Oculta("#BtnCancel","#ControlesModificar","2");
-    */
-?>
