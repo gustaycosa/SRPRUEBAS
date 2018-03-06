@@ -58,13 +58,48 @@ try{
                 { data: 'Nombre' },
                 { data: 'HORASREALES' },
                 { data: 'HORASFACTURABLES' },
-                { data: 'SERVICIOTALLER' },
-                { data: 'MANTENIMIENTO' },
-                { data: 'PERMISOS' },
-                { data: 'CAPACITACION' },
-                { data: 'TRASLADOS' },
-                { data: 'APOYODEMO' },
-                { data: 'APOYOTALLER' }
+                {
+                    "className":      'btn_SERVICIOTALLER',
+                    "orderable":      false,
+                    "data":           'SERVICIOTALLER',
+                    "defaultContent": ''
+                },
+                {
+                    "className":      'btn_MANTENIMIENTO',
+                    "orderable":      false,
+                    "data":           'MANTENIMIENTO',
+                    "defaultContent": ''
+                },
+                {
+                    "className":      'btn_PERMISOS',
+                    "orderable":      false,
+                    "data":           'PERMISOS',
+                    "defaultContent": ''
+                },
+                {
+                    "className":      'btn_CAPACITACION',
+                    "orderable":      false,
+                    "data":           'CAPACITACION',
+                    "defaultContent": ''
+                },
+                {
+                    "className":      'btn_TRASLADOS',
+                    "orderable":      false,
+                    "data":           'TRASLADOS',
+                    "defaultContent": ''
+                },
+                {
+                    "className":      'btn_APOYODEMO',
+                    "orderable":      false,
+                    "data":           'APOYODEMO',
+                    "defaultContent": ''
+                },
+                {
+                    "className":      'btn_APOYOTALLER',
+                    "orderable":      false,
+                    "data":           'APOYOTALLER',
+                    "defaultContent": ''
+                }
             ],
             columnDefs: [
                 { 'title': 'Clave', 'targets': 0},
@@ -80,13 +115,13 @@ try{
                 { 'title': 'Hrs ApoyoTaller', 'targets': 10}
             ],
             'createdRow': function ( row, data, index ) {
-                $(row).attr({ id:data.Cve_Empleado});
-                $(row).addClass('mecanico');
+                $(row).attr({ id:data.Cve_Empleado,nombre:data.Nombre});
+                //$(row).addClass('mecanico');
             },
             dom: 'lfBrtip',    
             paging: false,
             searching: true,
-            ordering: false,
+            ordering: true,
             buttons: [
                 {
                     extend: 'copy',

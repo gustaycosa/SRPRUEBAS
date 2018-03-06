@@ -75,7 +75,7 @@ try{
             scrollCollapse: true,
             dom: 'lfBrtip',    
             searching: true,
-            ordering: false,
+            ordering: true,
             buttons: [
                 {
                     extend: 'copy',

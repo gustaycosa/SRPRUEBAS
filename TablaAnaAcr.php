@@ -11,6 +11,7 @@ try{
         $parametros['Empresa'] = 'TAYCOSA';
         $parametros['Mes'] = $Mes;
         $parametros['Ejercicio'] = $Ejercicio;
+        $WS = new SoapClient($WebService, $parametros);
         $result = $WS->edorelacionacreedores($parametros);
         $xml = $result->edorelacionacreedoresResult->any;
         $obj = simplexml_load_string($xml);

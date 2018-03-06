@@ -58,17 +58,6 @@
                 </div>
                 <div class="respuesta"></div>
                 <div class="vtasdetalles"></div>
-                <!--
-                <button id="btn_facturado" class="btn_facturado btn btn-primary btn-sm" onMouseOver="">facturado</button>
-                <button id="btn_descuentos" class="btn_descuentos btn btn-primary btn-sm" onMouseOver="">descuentos</button>
-                <button id="btn_garantreem" class="btn_garantreem btn btn-primary btn-sm" onMouseOver="">garantreem</button>
-                <button id="btn_garantianore" class="btn_garantianore btn btn-primary btn-sm" onMouseOver="">garantianore</button>
-                <button id="btn_refacturacion" class="btn_refacturacion btn btn-primary btn-sm" onMouseOver="">refacturacion</button>
-                <button id="btn_abonomes" class="btn_abonomes btn btn-primary btn-sm" onMouseOver="">abonomes</button>
-                <button id="btn_devoproducto" class="btn_devoproducto btn btn-primary btn-sm" onMouseOver="">devoproducto</button>
-                <button id="btn_devorefactutacion" class="btn_devorefactutacion btn btn-primary btn-sm" onMouseOver="">devorefactutacion</button>
-                <button id="btn_cobrado" class="btn_cobrado btn btn-primary btn-sm" onMouseOver="">cobrado</button>
-                -->
                 <span id="TotalFac"></span>
                 <div class="vtasfacturas"></div>
 				<?php echo CargaGif();?>

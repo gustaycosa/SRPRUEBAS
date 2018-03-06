@@ -113,10 +113,206 @@
                 return false; // Evitar ejecutar el submit del formulario.
             });
         });
-        
+        /*
         $(document).on('dblclick','tr.mecanico',function(){
             var id = $(this).attr("id");
             $("#TxtClave").val(id);
+            $('#CargaGif').show();
+            $.ajax({
+                type: "POST",
+                url: 'tabla-tallmechorasdet.php',
+                data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
+                success: function(data) {
+                    //$('#btnEnviar').removeAttr('disabled');
+                    $('#CargaGif').hide();
+                    $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
+                    $("#DivMdlMaqDet").show();
+                    $('#MdlMaqDet').modal('show')
+                    $('#gridfact').DataTable().draw();
+                },
+                error: function(error) {
+                    $('#CargaGif').hide();
+                    console.log(error);
+                    alert('Algo salio mal :S');
+                }
+            });
+            return false; // Evitar ejecutar el submit del formulario.	
+        });*/
+
+        $(document).on('click','td.btn_SERVICIOTALLER',function(){
+            /*
+            var id = $(this).attr("id");
+            alert(id);
+            $("#TxtClave").val(id);
+            */
+            $('#CargaGif').show();
+            $.ajax({
+                type: "POST",
+                url: 'tabla-tallmechorasdet.php',
+                data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
+                success: function(data) {
+                    //$('#btnEnviar').removeAttr('disabled');
+                    $('#CargaGif').hide();
+                    $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
+                    $("#DivMdlMaqDet").show();
+                    $('#MdlMaqDet').modal('show')
+                    $('#gridfact').DataTable().draw();
+                },
+                error: function(error) {
+                    $('#CargaGif').hide();
+                    console.log(error);
+                    alert('Algo salio mal :S');
+                }
+            });
+            return false; // Evitar ejecutar el submit del formulario.	
+        });
+        
+        $(document).on('click','td.btn_MANTENIMIENTO',function(){
+            /*
+            var id = $(this).attr("id");
+            alert(id);
+            $("#TxtClave").val(id);
+            */
+            $('#CargaGif').show();
+            $.ajax({
+                type: "POST",
+                url: 'tabla-tallmechorasdet.php',
+                data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
+                success: function(data) {
+                    //$('#btnEnviar').removeAttr('disabled');
+                    $('#CargaGif').hide();
+                    $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
+                    $("#DivMdlMaqDet").show();
+                    $('#MdlMaqDet').modal('show')
+                    $('#gridfact').DataTable().draw();
+                },
+                error: function(error) {
+                    $('#CargaGif').hide();
+                    console.log(error);
+                    alert('Algo salio mal :S');
+                }
+            });
+            return false; // Evitar ejecutar el submit del formulario.	
+        });
+                
+        $(document).on('click','td.btn_PERMISOS',function(){
+            /*
+            var id = $(this).attr("id");
+            alert(id);
+            $("#TxtClave").val(id);
+            */
+            $('#CargaGif').show();
+            $.ajax({
+                type: "POST",
+                url: 'tabla-tallmechorasdet.php',
+                data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
+                success: function(data) {
+                    //$('#btnEnviar').removeAttr('disabled');
+                    $('#CargaGif').hide();
+                    $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
+                    $("#DivMdlMaqDet").show();
+                    $('#MdlMaqDet').modal('show')
+                    $('#gridfact').DataTable().draw();
+                },
+                error: function(error) {
+                    $('#CargaGif').hide();
+                    console.log(error);
+                    alert('Algo salio mal :S');
+                }
+            });
+            return false; // Evitar ejecutar el submit del formulario.	
+        });
+        
+        $(document).on('click','td.btn_CAPACITACION',function(){
+            /*
+            var id = $(this).attr("id");
+            alert(id);
+            $("#TxtClave").val(id);
+            */
+            $('#CargaGif').show();
+            $.ajax({
+                type: "POST",
+                url: 'tabla-tallmechorasdet.php',
+                data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
+                success: function(data) {
+                    //$('#btnEnviar').removeAttr('disabled');
+                    $('#CargaGif').hide();
+                    $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
+                    $("#DivMdlMaqDet").show();
+                    $('#MdlMaqDet').modal('show')
+                    $('#gridfact').DataTable().draw();
+                },
+                error: function(error) {
+                    $('#CargaGif').hide();
+                    console.log(error);
+                    alert('Algo salio mal :S');
+                }
+            });
+            return false; // Evitar ejecutar el submit del formulario.	
+        });
+        
+        $(document).on('click','td.btn_TRASLADOS',function(){
+            /*
+            var id = $(this).attr("id");
+            alert(id);
+            $("#TxtClave").val(id);
+            */
+            $('#CargaGif').show();
+            $.ajax({
+                type: "POST",
+                url: 'tabla-tallmechorasdet.php',
+                data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
+                success: function(data) {
+                    //$('#btnEnviar').removeAttr('disabled');
+                    $('#CargaGif').hide();
+                    $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
+                    $("#DivMdlMaqDet").show();
+                    $('#MdlMaqDet').modal('show')
+                    $('#gridfact').DataTable().draw();
+                },
+                error: function(error) {
+                    $('#CargaGif').hide();
+                    console.log(error);
+                    alert('Algo salio mal :S');
+                }
+            });
+            return false; // Evitar ejecutar el submit del formulario.	
+        });
+        
+        $(document).on('click','td.btn_APOYODEMO',function(){
+            /*
+            var id = $(this).attr("id");
+            alert(id);
+            $("#TxtClave").val(id);
+            */
+            $('#CargaGif').show();
+            $.ajax({
+                type: "POST",
+                url: 'tabla-tallmechorasdet.php',
+                data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
+                success: function(data) {
+                    //$('#btnEnviar').removeAttr('disabled');
+                    $('#CargaGif').hide();
+                    $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
+                    $("#DivMdlMaqDet").show();
+                    $('#MdlMaqDet').modal('show')
+                    $('#gridfact').DataTable().draw();
+                },
+                error: function(error) {
+                    $('#CargaGif').hide();
+                    console.log(error);
+                    alert('Algo salio mal :S');
+                }
+            });
+            return false; // Evitar ejecutar el submit del formulario.	
+        });
+        
+        $(document).on('click','td.btn_APOYOTALLER',function(){
+            /*
+            var id = $(this).attr("id");
+            alert(id);
+            $("#TxtClave").val(id);
+            */
             $('#CargaGif').show();
             $.ajax({
                 type: "POST",
