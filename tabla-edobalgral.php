@@ -1,14 +1,5 @@
 <?php
 
-require_once('lib/nusoap.php');
-include("Funciones.php"); 
-ini_set("soap.wsdl_cache_enabled","MES ACTUAL","MES ANTERIOR","ACUMULADO ACT.","ACUMULADO ANT.","TF");
-
-$titulos = array("CONCEPTO","MES ACTUAL","MES ANTERIOR","ACUMULADO ACT.","ACUMULADO ANT.");
-
-$ConceptoDivision = '';
-$Empresa = $_SESSION['Empresa'];
-$Suma = 0;
 try{ 
     
     if ($_POST){

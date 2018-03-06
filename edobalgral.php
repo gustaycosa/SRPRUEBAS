@@ -41,13 +41,13 @@
 
                     <button type="submit" id="btnEnviar" class="btn btn-primary btn-sm" onMouseOver="">Consultar</button>
                     
-                    <button id="BtnAnaAnt" class="btn btn-primary" type="button" data-toggle="modal" data-target="#MdlAntCli">
+                    <button id="BtnAnaCli" class="btn btn-primary" type="button" data-toggle="modal" data-target="#MdlAntCli">
                         <span class="glyphicon glyphicon-search" aria-hidden="true">Cli</span>
                     </button>
                     <button id="BtnAnaDeu" class="btn btn-primary" type="button" data-toggle="modal" data-target="#MdlAnaDeu">
                         <span class="glyphicon glyphicon-search" aria-hidden="true">Deu</span>
                     </button>
-                    <button id="BtnAnaCli" class="btn btn-primary" type="button" data-toggle="modal" data-target="#MdlAnaCli">
+                    <button id="BtnAnaAnt" class="btn btn-primary" type="button" data-toggle="modal" data-target="#MdlAnaAnt">
                         <span class="glyphicon glyphicon-search" aria-hidden="true">Ant</span>
                     </button>
                     <button id="BtnAnaAcr" class="btn btn-primary" type="button" data-toggle="modal" data-target="#MdlAnaAcr">
@@ -87,7 +87,8 @@
                         //$('#btnEnviar').removeAttr('disabled');
                         $("#DivMdlAntCli").html(data); // Mostrar la respuestas del script PHP.
                         $("#DivMdlAntCli").show();
-                        $('#MdlAntCli').modal('show')
+                        $('#MdlAntCli').modal('show');
+                        $('#gridcli').DataTable().draw();
                     },
                     error: function(error) {
                         console.log(error);
@@ -107,7 +108,8 @@
                         //$('#btnEnviar').removeAttr('disabled');
                         $("#DivMdlAnaDeu").html(data); // Mostrar la respuestas del script PHP.
                         $("#DivMdlAnaDeu").show();
-                        $('#MdlAnaDeu').modal('show')
+                        $('#MdlAnaDeu').modal('show');
+                        $('#griddeu').DataTable().draw();
                     },
                     error: function(error) {
                         console.log(error);
@@ -127,7 +129,8 @@
                         //$('#btnEnviar').removeAttr('disabled');
                         $("#DivMdlAnaPro").html(data); // Mostrar la respuestas del script PHP.
                         $("#DivMdlAnaPro").show();
-                        $('#MdlAnaPro').modal('show')
+                        $('#MdlAnaPro').modal('show');
+                        $('#gridpro').DataTable().draw();
                     },
                     error: function(error) {
                         console.log(error);
@@ -147,7 +150,8 @@
                         //$('#btnEnviar').removeAttr('disabled');
                         $("#DivMdlAnaAnt").html(data); // Mostrar la respuestas del script PHP.
                         $("#DivMdlAnaAnt").show();
-                        $('#MdlAnaAnt').modal('show')
+                        $('#MdlAnaAnt').modal('show');
+                        $('#gridant').DataTable().draw();
                     },
                     error: function(error) {
                         console.log(error);
@@ -157,17 +161,18 @@
                 return false; // Evitar ejecutar el submit del formulario.
             });
 
-            $('#BtnAnaAcr').click(function() {
+            $('#MdlAnaAcr').click(function() {
                 //$('#btnEnviar').attr('disabled', 'disabled')
                 $.ajax({
                     type: "POST",
-                    url: 'TablaAnaAcr2.php',
+                    url: 'TablaAnaAcr.php',
                     data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                     success: function(data) {
                         //$('#btnEnviar').removeAttr('disabled');
                         $("#DivMdlAnaAcr").html(data); // Mostrar la respuestas del script PHP.
                         $("#DivMdlAnaAcr").show();
-                        $('#MdlAnaAcr').modal('show')
+                        $('#MdlAnaAcr').modal('show');
+                        $('#gridacr').DataTable().draw();
                     },
                     error: function(error) {
                         console.log(error);

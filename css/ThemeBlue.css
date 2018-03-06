@@ -12,7 +12,7 @@ body {
 }
 
 #principal{
-	height:90%;
+	height:100%;padding: 0 !important;
 }
 .navbar-toggle{
     background: #000;
@@ -136,8 +136,8 @@ body::-webkit-scrollbar-thumb {
   background-color: slategrey;
   outline: 1px solid slategrey;
 }
-.ifmOpen{height: 100%; /*display: block;*/}
-.ifmMini{height: 100%; /*display: none;*/}
+.ifmOpen{height: 100%; padding: 0px !important;/*display: block;*/}
+.ifmMini{height: 100%; padding: 0px !important; /*display: none;*/}
 
 #grid tr td{
     text-align: right;
