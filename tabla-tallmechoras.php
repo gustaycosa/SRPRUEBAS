@@ -116,7 +116,7 @@ try{
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Cve_Empleado,nombre:data.Nombre});
-                //$(row).addClass('mecanico');
+                $(row).addClass('mec');
             },
             dom: 'lfBrtip',    
             paging: false,

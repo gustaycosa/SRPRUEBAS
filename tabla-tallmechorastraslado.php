@@ -70,7 +70,7 @@ try{
                 { 'title': 'Hrs fin', 'targets': 3},
                 { 'title': 'Horas', 'targets': 4},
                 { 'title': 'Fecha', 'targets': 5},
-                { 'title': 'Servicio', 'targets': 5}
+                { 'title': 'Servicio', 'targets': 6}
             ],
             ordering: false,
             scrollY:        '50vh',

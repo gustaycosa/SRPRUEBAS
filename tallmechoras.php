@@ -48,7 +48,7 @@
 						  </select>
 					  </div>
                     <div class="form-group">
-                        <input type="hidden" class="form-control" id="TxtClave" name="TxtClave" value="" placeholder="Ingrese ejercicio">
+                        <input type="hidden" id="TxtClave" name="TxtClave" value="">
                     </div>
                     <button type="submit" id="btnEnviar" class="btn btn-primary btn-sm" onMouseOver="">Consultar</button>
                 </form>
@@ -113,42 +113,17 @@
                 return false; // Evitar ejecutar el submit del formulario.
             });
         });
-        /*
-        $(document).on('dblclick','tr.mecanico',function(){
+        
+        $(document).on('click','tr.mec',function(){
             var id = $(this).attr("id");
             $("#TxtClave").val(id);
-            $('#CargaGif').show();
-            $.ajax({
-                type: "POST",
-                url: 'tabla-tallmechorasdet.php',
-                data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
-                success: function(data) {
-                    //$('#btnEnviar').removeAttr('disabled');
-                    $('#CargaGif').hide();
-                    $("#DivMdlMaqDet").html(data); // Mostrar la respuestas del script PHP.
-                    $("#DivMdlMaqDet").show();
-                    $('#MdlMaqDet').modal('show')
-                    $('#gridfact').DataTable().draw();
-                },
-                error: function(error) {
-                    $('#CargaGif').hide();
-                    console.log(error);
-                    alert('Algo salio mal :S');
-                }
-            });
-            return false; // Evitar ejecutar el submit del formulario.	
-        });*/
+        });
 
-        $(document).on('click','td.btn_SERVICIOTALLER',function(){
-            /*
-            var id = $(this).attr("id");
-            alert(id);
-            $("#TxtClave").val(id);
-            */
+        $(document).on('dblclick','td.btn_SERVICIOTALLER',function(){
             $('#CargaGif').show();
             $.ajax({
                 type: "POST",
-                url: 'tabla-tallmechorasdet.php',
+                url: 'tabla-tallmechorasservicio.php',
                 data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                 success: function(data) {
                     //$('#btnEnviar').removeAttr('disabled');
@@ -167,16 +142,11 @@
             return false; // Evitar ejecutar el submit del formulario.	
         });
         
-        $(document).on('click','td.btn_MANTENIMIENTO',function(){
-            /*
-            var id = $(this).attr("id");
-            alert(id);
-            $("#TxtClave").val(id);
-            */
+        $(document).on('dblclick','td.btn_MANTENIMIENTO',function(){
             $('#CargaGif').show();
             $.ajax({
                 type: "POST",
-                url: 'tabla-tallmechorasdet.php',
+                url: 'tabla-tallmechorasmtto.php',
                 data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                 success: function(data) {
                     //$('#btnEnviar').removeAttr('disabled');
@@ -195,16 +165,11 @@
             return false; // Evitar ejecutar el submit del formulario.	
         });
                 
-        $(document).on('click','td.btn_PERMISOS',function(){
-            /*
-            var id = $(this).attr("id");
-            alert(id);
-            $("#TxtClave").val(id);
-            */
+        $(document).on('dblclick','td.btn_PERMISOS',function(){
             $('#CargaGif').show();
             $.ajax({
                 type: "POST",
-                url: 'tabla-tallmechorasdet.php',
+                url: 'tabla-tallmechoraspermisos.php',
                 data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                 success: function(data) {
                     //$('#btnEnviar').removeAttr('disabled');
@@ -223,16 +188,11 @@
             return false; // Evitar ejecutar el submit del formulario.	
         });
         
-        $(document).on('click','td.btn_CAPACITACION',function(){
-            /*
-            var id = $(this).attr("id");
-            alert(id);
-            $("#TxtClave").val(id);
-            */
+        $(document).on('dblclick','td.btn_CAPACITACION',function(){
             $('#CargaGif').show();
             $.ajax({
                 type: "POST",
-                url: 'tabla-tallmechorasdet.php',
+                url: 'tabla-tallmechorascapacit.php',
                 data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                 success: function(data) {
                     //$('#btnEnviar').removeAttr('disabled');
@@ -251,16 +211,11 @@
             return false; // Evitar ejecutar el submit del formulario.	
         });
         
-        $(document).on('click','td.btn_TRASLADOS',function(){
-            /*
-            var id = $(this).attr("id");
-            alert(id);
-            $("#TxtClave").val(id);
-            */
+        $(document).on('dblclick','td.btn_TRASLADOS',function(){
             $('#CargaGif').show();
             $.ajax({
                 type: "POST",
-                url: 'tabla-tallmechorasdet.php',
+                url: 'tabla-tallmechorastraslado.php',
                 data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                 success: function(data) {
                     //$('#btnEnviar').removeAttr('disabled');
@@ -279,16 +234,11 @@
             return false; // Evitar ejecutar el submit del formulario.	
         });
         
-        $(document).on('click','td.btn_APOYODEMO',function(){
-            /*
-            var id = $(this).attr("id");
-            alert(id);
-            $("#TxtClave").val(id);
-            */
+        $(document).on('dblclick','td.btn_APOYODEMO',function(){
             $('#CargaGif').show();
             $.ajax({
                 type: "POST",
-                url: 'tabla-tallmechorasdet.php',
+                url: 'tabla-tallmechorasaprdemo.php',
                 data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                 success: function(data) {
                     //$('#btnEnviar').removeAttr('disabled');
@@ -307,16 +257,11 @@
             return false; // Evitar ejecutar el submit del formulario.	
         });
         
-        $(document).on('click','td.btn_APOYOTALLER',function(){
-            /*
-            var id = $(this).attr("id");
-            alert(id);
-            $("#TxtClave").val(id);
-            */
+        $(document).on('dblclick','td.btn_APOYOTALLER',function(){
             $('#CargaGif').show();
             $.ajax({
                 type: "POST",
-                url: 'tabla-tallmechorasdet.php',
+                url: 'tabla-tallmechorasapser.php',
                 data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                 success: function(data) {
                     //$('#btnEnviar').removeAttr('disabled');
