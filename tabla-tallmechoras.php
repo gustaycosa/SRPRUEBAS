@@ -60,43 +60,43 @@ try{
                 { data: 'HORASFACTURABLES' },
                 {
                     "className":      'btn_SERVICIOTALLER',
-                    "orderable":      false,
+                    "orderable":      true,
                     "data":           'SERVICIOTALLER',
                     "defaultContent": ''
                 },
                 {
                     "className":      'btn_MANTENIMIENTO',
-                    "orderable":      false,
+                    "orderable":      true,
                     "data":           'MANTENIMIENTO',
                     "defaultContent": ''
                 },
                 {
                     "className":      'btn_PERMISOS',
-                    "orderable":      false,
+                    "orderable":      true,
                     "data":           'PERMISOS',
                     "defaultContent": ''
                 },
                 {
                     "className":      'btn_CAPACITACION',
-                    "orderable":      false,
+                    "orderable":      true,
                     "data":           'CAPACITACION',
                     "defaultContent": ''
                 },
                 {
                     "className":      'btn_TRASLADOS',
-                    "orderable":      false,
+                    "orderable":      true,
                     "data":           'TRASLADOS',
                     "defaultContent": ''
                 },
                 {
                     "className":      'btn_APOYODEMO',
-                    "orderable":      false,
+                    "orderable":      true,
                     "data":           'APOYODEMO',
                     "defaultContent": ''
                 },
                 {
                     "className":      'btn_APOYOTALLER',
-                    "orderable":      false,
+                    "orderable":      true,
                     "data":           'APOYOTALLER',
                     "defaultContent": ''
                 }
