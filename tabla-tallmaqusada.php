@@ -31,6 +31,17 @@ try{
 	$arreglo = [];
 	for($i=0; $i<count($Datos); $i++){
 		$arreglo[$i]=$Datos[$i];
+        
+        if (file_exists('images/'.$Datos[$i]->Id_Maquinaria.'.jpg')) {
+            //echo "El fichero $nombre_fichero existe";
+            //echo "<script>alert('existe ".$Datos[$i]->Id_Maquinaria.".gif');</script>";
+        } else {
+            //echo "El fichero $nombre_fichero no existe";
+            //$cadenaWS = $Datos[$i]->ImgFrontal;
+            $imgWS = base64_decode($Datos[$i]->ImgFrontal);
+            file_put_contents('images/'.$Datos[$i]->Id_Maquinaria.'.jpg', $imgWS);
+        }
+
 	}
 
 ?>
@@ -63,7 +74,13 @@ try{
                 { data: 'HRS_MO_BIT' },
                 { data: 'COSTO_MO' },
                 { data: 'CostoCompra' },
-                { data: 'Acondicionamiento' }
+                { data: 'Acondicionamiento' },
+                {
+                    "className":      'img_maq',
+                    "orderable":      true,
+                    "data":           '',
+                    "defaultContent": ''
+                }
             ],
             columnDefs: [
                 { 'title': 'Id_Maquinaria', 'targets': 0},
@@ -74,11 +91,14 @@ try{
                 { 'title': 'Horas MO Bitacora', 'targets': 5},
                 { 'title': 'Costo MO', 'targets': 6},
                 { 'title': 'Costo compra', 'targets': 7},
-                { 'title': 'Acondicionamiento', 'targets': 8}
+                { 'title': 'Acondicionamiento', 'targets': 8},
+                { 'title': 'Imagen', 'targets': 9}
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Id_Maquinaria});
                 $(row).addClass('maquinaria');
+                $(row).children("td.img_maq").css('background', 'url("images/'+data.Id_Maquinaria+'.jpg") center no-repeat / cover');
+                $(row).children("td.img_maq").css('height', '100px');
             },
             dom: 'lfBrtip',    
             paging: false,
@@ -181,10 +201,11 @@ try{
                 'oAria': {
                     'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
                     'sSortDescending': ': Activar para ordenar la columna de manera descendente'
-                },
-            'paging': false,
-            'responsive': true
-            }
+                }
+            },
+            'scrollY':        '60vh',
+            'scrollCollapse': true,
+            'paging':         false
         } );
     } );
     </script>
