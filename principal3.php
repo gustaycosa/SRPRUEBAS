@@ -129,6 +129,12 @@ $Datos = $obj->NewDataSet->Table;
 			}
         });
         
+        $(document).on('click','#principal',function(){
+                $("#navmenu").hide();
+                $("#navmenu").css("left","-300px");
+                $("#edo").css("left","0px");
+        });
+        
         $(document).on('click','#edo',function(){
 			if ($("#navmenu").is(":hidden")) {
                 

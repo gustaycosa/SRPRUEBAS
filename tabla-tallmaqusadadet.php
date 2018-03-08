@@ -12,20 +12,6 @@
             $xml = $resultado->MaquinariaParaVtaDetalleResult->any;
             $obj = simplexml_load_string($xml);
             $MqVtaUsada = $obj->NewDataSet->Table;
-            //imagen png codificada en base64
-            //$cadenaWS = $MqVtaUsada[0]->ImgFrontal;
-            //$myText = (string)$myVar;
-            //$Base64Img = "data:image/png;base64,". $cadenaWS;
-            //eliminamos data:image/png; y base64, de la cadena que tenemos
-            //hay otras formas de hacerlo				   
-            //list(, $Base64Img) = explode(';', $Base64Img);
-            //list(, $Base64Img) = explode(',', $Base64Img);
-            //Decodificamos $Base64Img codificada en base64.
-            //$Base64Img = base64_decode($cadenaWS);
-            //escribimos la información obtenida en un archivo llamado 
-            //unodepiera.png para que se cree la imagen correctamente
-            //file_put_contents('xxx.jpg', $Base64Img);
-
             $VarMaquinaDesc = $MqVtaUsada[0]->TipoMaquinaria." ".$MqVtaUsada[0]->Marca." ".$MqVtaUsada[0]->Modelo;
         }
 
