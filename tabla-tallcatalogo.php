@@ -15,8 +15,8 @@ try{
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         $WS = new SoapClient($WebService);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->MaquinariaParaVta();
-        $xml = $result->MaquinariaParaVtaResult->any;
+        $result = $WS->MaquinariaParaCatalogo();
+        $xml = $result->MaquinariaParaCatalogoResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
     }
@@ -75,6 +75,7 @@ try{
                 { data: 'COSTO_MO' },
                 { data: 'CostoCompra' },
                 { data: 'Acondicionamiento' },
+                { data: 'Ubicacion' },
                 {
                     "className":      'img_maq',
                     "orderable":      true,
@@ -92,7 +93,8 @@ try{
                 { 'title': 'Costo MO', 'targets': 6},
                 { 'title': 'Costo compra', 'targets': 7},
                 { 'title': 'Acondicionamiento', 'targets': 8},
-                { 'title': 'Imagen', 'targets': 9}
+                { 'title': 'Ubicacion', 'targets': 9},
+                { 'title': 'Imagen', 'targets': 10}
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Id_Maquinaria});

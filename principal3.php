@@ -43,9 +43,6 @@ $Datos = $obj->NewDataSet->Table;
     }
 				echo '   
 			</ul></li>
-            <li><a href="tallmaqusada2.php" id="tallmaqusada2" target="tallmaqusada2" class="list-group-item">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span> maq usada con imagenes
-            </a>
             <li><a href="salir.php" type="button" style="background:black !important; color: white !important;">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Cerrar sesión
             </a>

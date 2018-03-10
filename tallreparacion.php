@@ -3,9 +3,9 @@
 <html class="no-js">
 
 <?php include("Funciones.php"); ?>
-<?php echo Cabecera('Taller maquinaria usada'); ?>
+<?php echo Cabecera('Maquinaria en reparacion'); ?>
 <?php
-    $TituloPantalla = 'Taller maquinaria usada';  
+    $TituloPantalla = 'Maquinaria en reparacion';  
 	//$Arreglo = array("Nombre","Saldo");
 	//echo PasaArreglo($Arreglo);
 ?>
