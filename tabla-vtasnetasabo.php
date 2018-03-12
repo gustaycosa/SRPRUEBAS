@@ -1,12 +1,4 @@
 <?php
-
-require_once('lib/nusoap.php');
-include("Funciones.php"); 
-ini_set("soap.wsdl_cache_enabled", "0");
-
-$ConceptoDivision = '';
-$Empresa = $_SESSION['Empresa'];
-$Suma = 0;
 try{ 
     
     if ($_POST){

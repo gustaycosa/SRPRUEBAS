@@ -6,8 +6,8 @@ try{
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         $WS = new SoapClient($WebService);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->MaquinariaParaVta();
-        $xml = $result->MaquinariaParaVtaResult->any;
+        $result = $WS->MaquinariaParaCatalogo();
+        $xml = $result->MaquinariaParaCatalogoResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
     }
@@ -66,7 +66,7 @@ try{
          var table = $('#grid').DataTable({
             data:datos,
             columns: [
-                { data: 'Id_Maquinaria' },
+                { data: 'id_maquinaria' },
                 { data: 'Marca' },
                 { data: 'TipoMaquinaria' },
                 { data: 'Modelo' },
@@ -75,7 +75,7 @@ try{
                 { data: 'COSTO_MO' },
                 { data: 'CostoCompra' },
                 { data: 'Acondicionamiento' },
-                { data: 'Ubicacion' },
+                { data: 'UBICACION' },
                 {
                     "className":      'img_maq',
                     "orderable":      true,
@@ -84,7 +84,7 @@ try{
                 }
             ],
             columnDefs: [
-                { 'title': 'Id_Maquinaria', 'targets': 0},
+                { 'title': 'Id Maquinaria', 'targets': 0},
                 { 'title': 'Marca', 'targets': 1},
                 { 'title': 'Tipo', 'targets': 2},
                 { 'title': 'Modelo', 'targets': 3},

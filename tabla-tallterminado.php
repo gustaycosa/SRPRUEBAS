@@ -6,8 +6,8 @@ try{
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         $WS = new SoapClient($WebService);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->MaquinariaParaVta();
-        $xml = $result->MaquinariaParaVtaResult->any;
+        $result = $WS->MaquinariaParaTerminar();
+        $xml = $result->MaquinariaParaTerminarResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
     }
@@ -15,8 +15,8 @@ try{
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         $WS = new SoapClient($WebService);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->MaquinariaParaVta();
-        $xml = $result->MaquinariaParaVtaResult->any;
+        $result = $WS->MaquinariaParaTerminar();
+        $xml = $result->MaquinariaParaTerminarResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
     }
