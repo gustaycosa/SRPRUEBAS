@@ -6,8 +6,8 @@ try{
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         $WS = new SoapClient($WebService);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->MaquinariaParaReparacion();
-        $xml = $result->MaquinariaParaReparacionResult->any;
+        $result = $WS->MaquinariaParaTerminar();
+        $xml = $result->MaquinariaParaTerminarResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
     }
@@ -15,8 +15,8 @@ try{
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         $WS = new SoapClient($WebService);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->MaquinariaParaReparacion();
-        $xml = $result->MaquinariaParaReparacionResult->any;
+        $result = $WS->MaquinariaParaTerminar();
+        $xml = $result->MaquinariaParaTerminarResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
     }
@@ -66,34 +66,39 @@ try{
          var table = $('#grid').DataTable({
             data:datos,
             columns: [
+                { data: 'Id_Maquinaria' },
+                { data: 'Marca' },
+                { data: 'TipoMaquinaria' },
+                { data: 'Modelo' },
+                { data: 'HRS_MO' },
+                { data: 'HRS_MO_BIT' },
+                { data: 'COSTO_MO' },
+                { data: 'CostoCompra' },
+                { data: 'Acondicionamiento' },
                 {
                     "className":      'img_maq',
                     "orderable":      true,
                     "data":           '',
                     "defaultContent": ''
-                },
-                { data: 'maquinaria' },
-                { data: 'HRS_MO' },
-                { data: 'HRS_MO_BIT' },
-                { data: 'COSTO_MO' },
-                { data: 'CostoCompra' },
-                { data: 'Acondicionamiento' }
+                }
             ],
             columnDefs: [
-                { 'title': 'Imagen', 'targets': 0},
-                { 'title': 'maquinaria', 'targets': 1},
-                { 'title': 'Horas MO', 'targets': 2},
-                { 'title': 'Horas MO Bitacora', 'targets': 3},
-                { 'title': 'Costo MO', 'targets': 4},
-                { 'title': 'Costo compra', 'targets': 5},
-                { 'title': 'Acondicionamiento', 'targets': 6}
+                { 'title': 'Id_Maquinaria', 'targets': 0},
+                { 'title': 'Marca', 'targets': 1},
+                { 'title': 'Tipo', 'targets': 2},
+                { 'title': 'Modelo', 'targets': 3},
+                { 'title': 'Horas MO', 'targets': 4},
+                { 'title': 'Horas MO Bitacora', 'targets': 5},
+                { 'title': 'Costo MO', 'targets': 6},
+                { 'title': 'Costo compra', 'targets': 7},
+                { 'title': 'Acondicionamiento', 'targets': 8},
+                { 'title': 'Imagen', 'targets': 9}
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Id_Maquinaria});
                 $(row).addClass('maquinaria');
                 $(row).children("td.img_maq").css('background', 'url("images/'+data.Id_Maquinaria+'.jpg") center no-repeat / cover');
-                $(row).children("td.img_maq").css('height', '150px');
-                $(row).children("td.img_maq").css('width', '150px');
+                $(row).children("td.img_maq").css('height', '100px');
             },
             dom: 'lfBrtip',    
             paging: false,
