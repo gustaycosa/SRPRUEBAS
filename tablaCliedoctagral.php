@@ -1,12 +1,5 @@
 <?php
 
-require_once('lib/nusoap.php');
-include("Funciones.php"); 
-ini_set("soap.wsdl_cache_enabled", "0");
-
-//COLUMNAS GRID
-//$De = date('Y-m-d');
-//$A = date('Y-m-d');
 try{ 
     
     if ($_POST){

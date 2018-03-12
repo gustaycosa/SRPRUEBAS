@@ -46,7 +46,7 @@
                 $('#btnEnviar').attr('disabled', 'disabled')
                 $.ajax({
                     type: "POST",
-                    url: 'tabla-tallmaqusada.php',
+                    url: 'tabla-tallreparacion.php',
                     data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                     success: function(data) {
 						$('#CargaGif').hide();

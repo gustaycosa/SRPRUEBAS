@@ -1,15 +1,5 @@
 <?php
 
-require_once('lib/nusoap.php');
-include("Funciones.php"); 
-ini_set("soap.wsdl_cache_enabled", "0");
-
-$Columnas = array("Nombre","Fecha","Articulo","Descripcion","FacturaActual","cliente","TotalMOServicio");
-$titulos = array("NOMBRE","FECHA","ARTICULO","DESCRIPCION","FACTURA ACTUAL","CLIENTE","SUBTOTAL");
-
-$ConceptoDivision = '';
-$Empresa = $_SESSION['Empresa'];
-$Suma = 0;
 try{ 
     
     if ($_POST){
@@ -41,43 +31,26 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><thead><tr>"; 
-                echo "<th>".$titulos[0]."</th>";
-                echo "<th>".$titulos[1]."</th>";
-                echo "<th>".$titulos[2]."</th>";
-                echo "<th>".$titulos[3]."</th>";
-                echo "<th>".$titulos[4]."</th>";
-                echo "<th>".$titulos[5]."</th>";
-                echo "<th>".$titulos[6]."</th>";
-            echo "</tr></thead><tfoot><tr>";
-                echo "<th>".$titulos[0]."</th>";
-                echo "<th>".$titulos[1]."</th>";
-                echo "<th>".$titulos[2]."</th>";
-                echo "<th>".$titulos[3]."</th>";
-                echo "<th>".$titulos[4]."</th>";
-                echo "<th>".$titulos[5]."</th>";
-                echo "<th>".$titulos[6]."</th>";
-            echo "</tr></tfoot><tbody>";
-
-     for($i=0; $i<count($Datos); $i++){
-         echo "<tr>";
-             echo "<td>".$Datos[$i]->$Columnas[0]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[1]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[2]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[4]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[4]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[5]."</td>"; 
-             echo "<td>".$Datos[$i]->$Columnas[6]."</td>";
-         echo "</tr>";
-     } 
-
-      echo "</tbody></table></div>";
-      echo number_format($Suma, 2, ',', ' ');
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><thead><tr></tr></thead><tbody></tbody></table></div>";
+	$arreglo = [];
+	for($i=0; $i<count($Datos); $i++){
+		$arreglo[$i]=$Datos[$i];
+	}
 
 ?>
 
-     <script type="text/javascript"> 
-        
-        <?php echo GrdRpt('Edo-IngTll_'.$Mes."-".$Ejercicio); ?>
+     <script type="text/javascript">  
+        var datos = 
+        <?php 
+            echo json_encode($arreglo);
+        ?>
+		;
+        <?php
+			$sGridNomb = 'grid';
+			$sWsNomb = 'ing_emp_taller';
+            $aColumnas = array("Nombre","Fecha","Articulo","Descripcion","FacturaActual","cliente","TotalMOServicio");
+            $aTitulos = array("NOMBRE","FECHA","ARTICULO","DESCRIPCION","FACTURA ACTUAL","CLIENTE","SUBTOTAL");
+			echo GrdRpt($sGridNomb,$sWsNomb,$aColumnas,$aTitulos);
+		?>
 
     </script>

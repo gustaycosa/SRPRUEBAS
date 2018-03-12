@@ -1,18 +1,8 @@
 <?php
 
-require_once('lib/nusoap.php');
-
-ini_set("soap.wsdl_cache_enabled", "0");
-
 $Columnas = array("Nombre","Saldo");
 $titulos = array("NOMBRE PROVEEDOR","SALDO PROVEEDOR");
 
-//$De = date('Y-m-d');
-//$A = date('Y-m-d');
-
-$ConceptoDivision = '';
-$Empresa = $_SESSION['Empresa'];
-$Suma = 0;
 try{ 
     
     if ($_POST){

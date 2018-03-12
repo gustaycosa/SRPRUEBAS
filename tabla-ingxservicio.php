@@ -1,15 +1,8 @@
 <?php
 
-require_once('lib/nusoap.php');
-include("Funciones.php"); 
-ini_set("soap.wsdl_cache_enabled", "0");
-
 $Columnas = array("ID_SUCURSAL","CONCEPTO","DEBE","HABER","INGRESOS","DEVOLUCION","REFACT","DESCVENTAS","NETO","TF");
 $titulos = array("ID_SUCURSAL","CONCEPTO","DEBE","HABER","INGRESOS","DEVOLUCION","REFACT","DESCVENTAS","NETO","TF");
 
-$ConceptoDivision = '';
-$Empresa = $_SESSION['Empresa'];
-$Suma = 0;
 try{ 
     
     if ($_POST){

@@ -1,16 +1,9 @@
 <?php
 
-require_once('lib/nusoap.php');
-include("Funciones.php"); 
-ini_set("soap.wsdl_cache_enabled", "0");
-
 $Columnas = array("Id_ConceptoCtb","ConceptoCtb","Dic","Nov","Oct","Sep","Ago","Jul","Jun","May","Abr","Mar","Feb","Ene","Acumulado","TF");
 
 $titulos = array("Id_ConceptoCtb","ConceptoCtb","Dic","Nov","Oct","Sep","Ago","Jul","Jun","May","Abr","Mar","Feb","Ene","Acumulado","TF");
 
-$ConceptoDivision = '';
-$Empresa = $_SESSION['Empresa'];
-$Suma = 0;
 try{ 
     
     if ($_POST){

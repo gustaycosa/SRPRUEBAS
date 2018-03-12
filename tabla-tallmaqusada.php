@@ -66,41 +66,44 @@ try{
          var table = $('#grid').DataTable({
             data:datos,
             columns: [
-                { data: 'Id_Maquinaria' },
-                { data: 'Marca' },
-                { data: 'TipoMaquinaria' },
-                { data: 'Modelo' },
-                { data: 'HRS_MO' },
-                { data: 'HRS_MO_BIT' },
-                { data: 'COSTO_MO' },
-                { data: 'CostoCompra' },
-                { data: 'Acondicionamiento' },
-                { data: 'Ubicacion' },
                 {
                     "className":      'img_maq',
                     "orderable":      true,
                     "data":           '',
                     "defaultContent": ''
-                }
+                },
+                { data: 'FechaAlta' },
+                { data: 'Marca' },
+                { data: 'TipoMaquinaria' },
+                { data: 'Modelo' },
+                { data: 'serie' },
+                { data: 'CostoCompra' },
+                { data: 'Acondicionamiento' },
+                { data: 'HRS_MO' },
+                { data: 'COSTO_MO' },
+                { data: 'CostoFinal' },
+                { data: 'Ubicacion' }
             ],
             columnDefs: [
-                { 'title': 'Id_Maquinaria', 'targets': 0},
-                { 'title': 'Marca', 'targets': 1},
-                { 'title': 'Tipo', 'targets': 2},
-                { 'title': 'Modelo', 'targets': 3},
-                { 'title': 'Horas MO', 'targets': 4},
-                { 'title': 'Horas MO Bitacora', 'targets': 5},
-                { 'title': 'Costo MO', 'targets': 6},
-                { 'title': 'Costo compra', 'targets': 7},
-                { 'title': 'Acondicionamiento', 'targets': 8},
-                { 'title': 'Ubicacion', 'targets': 9},
-                { 'title': 'Imagen', 'targets': 10}
+                { 'title': 'Imagen', 'targets': 0},
+                { 'title': 'Alta', 'targets': 1},
+                { 'title': 'Marca', 'targets': 2},
+                { 'title': 'Tipo', 'targets': 3},
+                { 'title': 'Modelo', 'targets': 4},
+                { 'title': 'Serie', 'targets': 5},
+                { 'title': 'Costo compra', 'targets': 6},
+                { 'title': 'Acondicionamiento', 'targets': 7},
+                { 'title': 'Horas MO', 'targets': 8},
+                { 'title': 'Costo MO', 'targets': 9},
+                { 'title': 'Costo Final', 'targets': 10},
+                { 'title': 'Ubicacion', 'targets': 11}
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Id_Maquinaria});
                 $(row).addClass('maquinaria');
                 $(row).children("td.img_maq").css('background', 'url("images/'+data.Id_Maquinaria+'.jpg") center no-repeat / cover');
-                $(row).children("td.img_maq").css('height', '100px');
+                $(row).children("td.img_maq").css('height', '150px');
+                $(row).children("td.img_maq").css('width', '150px');
             },
             dom: 'lfBrtip',    
             paging: false,

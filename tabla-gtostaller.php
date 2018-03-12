@@ -1,9 +1,5 @@
 <?php
 
-//require_once('lib/nusoap.php');
-include("Funciones.php"); 
-//ini_set("soap.wsdl_cache_enabled", "0");
-
 $Columnas = array("Id_ConceptoCtb","ConceptoCtb","Mes_Actual","Mes_Anterior","Variacion","Acumulado_ene","Prom_mensual","Ingresos_gen","Util_per_generada","Ano_Act","Ano_Ant","TF");
 $titulos = array("Id","CONCEPTO CONTABLE","MES ACTUAL","MES ANTERIOR","VARIACION","ACUMULADO ENERO","PROMDERIO MENSUAL","INGRESOS GENERADOS","UTILIDAD/PERDIDA","AÑO ACTUAL","AÑO ANTERIOR","TF");
 

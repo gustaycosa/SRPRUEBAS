@@ -66,10 +66,7 @@ try{
          var table = $('#grid').DataTable({
             data:datos,
             columns: [
-                { data: 'Id_Maquinaria' },
-                { data: 'Marca' },
-                { data: 'TipoMaquinaria' },
-                { data: 'Modelo' },
+                { data: 'maquinaria' },
                 { data: 'HRS_MO' },
                 { data: 'HRS_MO_BIT' },
                 { data: 'COSTO_MO' },
@@ -83,16 +80,13 @@ try{
                 }
             ],
             columnDefs: [
-                { 'title': 'Id_Maquinaria', 'targets': 0},
-                { 'title': 'Marca', 'targets': 1},
-                { 'title': 'Tipo', 'targets': 2},
-                { 'title': 'Modelo', 'targets': 3},
-                { 'title': 'Horas MO', 'targets': 4},
-                { 'title': 'Horas MO Bitacora', 'targets': 5},
-                { 'title': 'Costo MO', 'targets': 6},
-                { 'title': 'Costo compra', 'targets': 7},
-                { 'title': 'Acondicionamiento', 'targets': 8},
-                { 'title': 'Imagen', 'targets': 9}
+                { 'title': 'maquinaria', 'targets': 0},
+                { 'title': 'Horas MO', 'targets': 1},
+                { 'title': 'Horas MO Bitacora', 'targets': 2},
+                { 'title': 'Costo MO', 'targets': 3},
+                { 'title': 'Costo compra', 'targets': 4},
+                { 'title': 'Acondicionamiento', 'targets': 5},
+                { 'title': 'Imagen', 'targets': 6}
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Id_Maquinaria});
