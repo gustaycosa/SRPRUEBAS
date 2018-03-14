@@ -31,6 +31,7 @@
                 <span id="TotalFac"></span>
                 <div class="vtasfacturas"></div>
 				<?php echo CargaGif();?>
+                
             </div>
         </div>
         <?php echo MdlSearch('MdlMaqDet','Detalle maquinaria');?>

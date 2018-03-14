@@ -37,7 +37,7 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>"; 
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>"; 
             echo "</table></div>";
 
 	$arreglo = [];
@@ -121,10 +121,8 @@ try{
             ],
             'createdRow': function ( row, data, index ) {
             },  
+            fixedHeader: true,
             dom: 'lfBrtip', 
-            paging: false,
-            searching: false,
-            ordering: false,
             buttons: [
                 {
                     extend: 'copy',
@@ -223,8 +221,10 @@ try{
                     'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
                     'sSortDescending': ': Activar para ordenar la columna de manera descendente'
                 },
-            'paging': false,
-            'responsive': true
+            'scrollY':        '60vh',
+            'scrollX':        true,
+            'scrollCollapse': true,
+            'paging':         false
             },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;

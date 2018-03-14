@@ -5,7 +5,7 @@ try{
     if ($_POST){
         
         $Empresa = $_POST["CmbEmpresa"];
-        $clave = $_POST["Cmbnomempleados"]; 
+        $clave = $_POST["CmbMECAVENTAS"]; 
         $De = $_POST["Fini"];
         $A =  $_POST["Ffin"]; 
         $dDe = strtotime($De);
@@ -25,8 +25,9 @@ try{
         //Invocación al web service
         $WS = new SoapClient($WebService, $parametros);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->Inf_Tal_Comisiones_Mecanicos($parametros);
-        $xml = $result->Inf_Tal_Comisiones_MecanicosResult->any;
+        $result = $WS->Inf_Tal_Comisiones_Mecanicos_vtas($parametros);
+        $xml = $result->Inf_Tal_Comisiones_Mecanicos_vtasResult->any;
+
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
 //echo $xml;
@@ -35,9 +36,8 @@ try{
 } catch(SoapFault $e){
   var_dump($e);
 }
-
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>"; 
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>"; 
             echo "</table></div>";
 
 	$arreglo = [];
@@ -71,9 +71,9 @@ try{
             data:datos,
             columns: [
                 { data: 'TipoServicio' },
+                { data: 'Caso' },
                 { data: 'Movimiento' },
                 { data: 'Id_MO' },
-                { data: 'Nombre' },
                 { data: 'Fecha' },
                 { data: 'Articulo' },
                 { data: 'Descripcion' },
@@ -83,22 +83,22 @@ try{
                 { data: 'ImporteMOServicio' },
                 { data: 'TotalMOServicio' },
                 { data: 'Facturas' },
-                { data: 'Clasificacion' },
                 { data: 'Tipo' },
                 { data: 'FacturaActual' },
                 { data: 'FacturaAnterior' },
                 { data: 'HorasFacturadas' },
                 { data: 'PrecioUnitario' },
-                { data: 'ImporteMO' },
                 { data: 'ImporteMOFactura' },
-                { data: 'Comision' },
-                { data: 'cliente' }
+                { data: 'TotalMOFactura' },
+                { data: 'vComision' },
+                { data: 'cliente' },
+                { data: 'Comision' }
             ],
             columnDefs: [
                 { 'title': 'TIPO SERV','targets': 0},
-                { 'title': 'MOVIMIENTO','targets': 1},
-                { 'title': 'ID MO','targets': 2},
-                { 'title': 'NOMBRE','targets': 3},
+                { 'title': 'CASO','targets': 1},
+                { 'title': 'MOVIMIENTO','targets': 2},
+                { 'title': 'ID MO','targets': 3},
                 { 'title': 'FECHA','targets': 4},
                 { 'title': 'ARTICULO','targets': 5},
                 { 'title': 'DESCRIPCION','targets': 6},
@@ -108,23 +108,21 @@ try{
                 { 'title': 'IMPORTE MO','targets': 10},
                 { 'title': 'TOTAL MO','targets': 11},
                 { 'title': 'FACTURAS','targets': 12},
-                { 'title': 'CLASIFICACION','targets': 13},
-                { 'title': 'TIPO','targets': 14},
-                { 'title': 'FACT ACTUAL','targets': 15},
-                { 'title': 'FACT ANTERIOR','targets': 16},
-                { 'title': 'HRS FACT','targets': 17},
-                { 'title': 'PRECIO UNITARIO','targets': 18},
-                { 'title': 'IMPORTE MO','targets': 19},
-                { 'title': 'IMPORTE MO FACT','targets': 20},
-                { 'title': 'COMISION','targets': 21},
-                { 'title': 'CLIENTE','targets': 22}
+                { 'title': 'TIPO','targets': 13},
+                { 'title': 'FACT ACTUAL','targets': 14},
+                { 'title': 'FACT ANTERIOR','targets': 15},
+                { 'title': 'HRS FACT','targets': 16},
+                { 'title': 'PRECIO UNITARIO','targets': 17},
+                { 'title': 'IMPORTE MO FACT','targets': 18},
+                { 'title': 'TOTAL MO FACT','targets': 19},
+                { 'title': 'VCOMISION','targets': 20},
+                { 'title': 'CLIENTE','targets': 21},
+                { 'title': 'COMISION','targets': 22}
             ],
             'createdRow': function ( row, data, index ) {
             },  
+            fixedHeader: true,
             dom: 'lfBrtip', 
-            paging: false,
-            searching: false,
-            ordering: false,
             buttons: [
                 {
                     extend: 'copy',
@@ -147,7 +145,7 @@ try{
                         } );
                         // Data URL generated by http://dataurl.net/#dataurlmaker
                     },
-                    filename: 'commecanicos',
+                    filename: 'commecanicosvtas',
                     extension: '.pdf',       
                     exportOptions: {
                         columns: ':visible',
@@ -160,7 +158,7 @@ try{
                     extend: 'csv',
                     text: 'CSV',
                     header:'true',
-                    filename: 'commecanicos',
+                    filename: 'commecanicosvtas',
                     extension: '.csv',       
                     exportOptions: {
                         columns: ':visible',
@@ -173,7 +171,7 @@ try{
                     extend: 'excel',
                     message: 'PDF creado desde el sistema en linea del tayco.',
                     text: 'XLS',
-                    filename: 'commecanicos',
+                    filename: 'commecanicosvtas',
                     extension: '.xlsx', 
                     exportOptions: {
                         columns: ':visible',
@@ -223,8 +221,10 @@ try{
                     'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
                     'sSortDescending': ': Activar para ordenar la columna de manera descendente'
                 },
-            'paging': false,
-            'responsive': true
+            'scrollY':        '60vh',
+            'scrollX':        true,
+            'scrollCollapse': true,
+            'paging':         false
             },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -281,4 +281,3 @@ try{
     } );
         
     </script>
-            

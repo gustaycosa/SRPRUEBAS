@@ -34,12 +34,6 @@
                       </span>
                     </div>
                     <div class="form-group">
-                        <label for="inputFechaIni">Empresa:</label>
-                        <select id="CmbEmpresa" name="CmbEmpresa" class="form-control">
-                              <option>TAYCOSA</option>
-                          </select>
-                    </div>
-                    <div class="form-group">
                         <label for="inputFechaIni">De:</label>
                         <input type="date" name="Fini" id="Fini" value="<?php echo date("Y-m-d");?>" class="form-control" placeholder="Rango Fecha Inicial" />
                     </div>
@@ -53,6 +47,7 @@
                 <?php include("TablaClientes.php"); ?>
                 </div>
                 <div class="respuesta"></div>
+                <?php echo CargaGif();?>
             </div>
         </div>
     </body>
@@ -65,17 +60,20 @@
             $("form").on('submit', function(e) {
 
                 e.preventDefault();
+                $('#CargaGif').show();
                 $('#btnEnviar').attr('disabled', 'disabled')
                 $.ajax({
                     type: "POST",
-                    url: 'tablaCliedoctagral.php',
+                    url: 'tabla-admcliedoctagral.php',
                     data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                     success: function(data) {
+                        $('#CargaGif').hide();
                         $('#btnEnviar').removeAttr('disabled');
                         $(".respuesta").html(data); // Mostrar la respuestas del script PHP.
                         $(".respuesta").show();
                     },
                     error: function(error) {
+                        $('#CargaGif').hide();
                         console.log(error);
                         alert('Algo salio mal :S');
                     }

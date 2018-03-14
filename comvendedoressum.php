@@ -42,6 +42,7 @@
                 <input type="text"  name="TotalComisiones" id="TotalComisiones" class="form-control">
                 
             </form>
+            <?php echo CargaGif();?>
             <div class="respuesta"></div>
         </div>
     </div>

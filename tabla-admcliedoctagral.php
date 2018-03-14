@@ -4,33 +4,26 @@ try{
     
     if ($_POST){
         
-        
         $Empresa = $_POST["CmbEmpresa"];
-        $De = $_POST["Fini"];
         $A =  $_POST["Ffin"]; 
-        $user =  $_POST["CmbATT_USERINFO"]; 
+        $De = $_POST["Fini"];
+        $Cliente =  $_POST["TxtCliente"]; 
+        $Moneda =  $_POST["CmbMoneda"]; 
 
-        $dDe = strtotime($De);
-        $newformat1 = date('Y-m-d',$dDe);
-        
-        $dA = strtotime($A);
-        $newformat2 = date('Y-m-d',$dA);
-        
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         //parametros de la llamada
         $parametros = array();
         $parametros['sId_Empresa'] = 'TAYCOSA';
-        $parametros['De'] = $newformat1;
-        $parametros['A'] = $newformat2;
-        $parametros['iUserID'] = $user;
-
+        $parametros['dtFechaIni'] = $De;
+        $parametros['dtFechaFin'] = $A;
+        $parametros['sId_Cliente'] = $Cliente;
+        $parametros['sMoneda'] = $Moneda;
         //ini_set("soap.wsdl_cache_enabled", "0");
         //Invocación al web service
         $WS = new SoapClient($WebService, $parametros);
         //recibimos la respuesta dentro de un objeto
-        $result = $WS->ReporteAsistencias($parametros);
-        $xml = $result->ReporteAsistenciasResult->any;
-
+        $result = $WS->Inf_Cli_EstadoCuentaGral($parametros);
+        $xml = $result->Inf_Cli_EstadoCuentaGralResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
 //echo $xml;
@@ -40,8 +33,7 @@ try{
   var_dump($e);
 }
 
-    echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
+echo "<div class='table-responsive'><table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
 
 	$arreglo = [];
 	for($i=0; $i<count($Datos); $i++){
@@ -56,35 +48,56 @@ try{
             echo json_encode($arreglo);
         ?>
 		;
-		<?php
 /*
-			$sGridNomb = '#gridfact';
-			$sWsNomb = 'vtas_netasfact';
-			$aColumnas = array("Fecha","Id_Sucursal","Serie","Folio","Id_cliente","Nombre","Concepto","Total");
-			$aTitulos =  array("Fecha","Id_Sucursal","Serie","Folio","Id_cliente","Nombre","Concepto","Total");
+			$sGridNomb = '#grid';
+			$sWsNomb = 'cliedoctagral';
+            $aColumnas = array("FECHA","CVE_DOCUMENTO","CARGO","ABONO","SALDOCLIENTE","CONCEPTO","REFERENCIA","FECHAVENCE","SALDODOCTO","SALDOMOVTO","DIASVENCE","SUBTOTAL","IMPIVA","DESCTO","TOTAL","CVEDOCTO","TIPODOCTO","FUM","ID_USUARIO");
+            $aTitulos = array("FECHA","CVE_DOCUMENTO","CARGO","ABONO","SALDOCLIENTE","CONCEPTO","REFERENCIA","FECHAVENCE","SALDODOCTO","SALDOMOVTO","DIASVENCE","SUBTOTAL","IMPIVA","DESCTO","TOTAL","CVEDOCTO","TIPODOCTO","FUM","ID_USUARIO");
 			echo GrdRptShort($sGridNomb,$sWsNomb,$aColumnas,$aTitulos);
-            */
-		?>
-
-$Columnas = array("USERID","NAME","FECHA","DIA","ENTRADA","SALIDA","ATT");//COLUMNAS GRID
- $(document).ready(function() {
+            
+		?>*/
+$(document).ready(function() {
          var table = $('#grid').DataTable({
             data:datos,
             columns: [
-                { data: 'NAME' },
                 { data: 'FECHA' },
-                { data: 'DIA' },
-                { data: 'ENTRADA' },
-                { data: 'SALIDA' },
-                { data: 'ATT' }
+                { data: 'CVE_DOCUMENTO' },
+                { data: 'CARGO' },
+                { data: 'ABONO' },
+                { data: 'SALDOCLIENTE' },
+                { data: 'CONCEPTO' },
+                { data: 'REFERENCIA' },
+                { data: 'FECHAVENCE' },
+                { data: 'SALDODOCTO' },
+                { data: 'SALDOMOVTO' },
+                { data: 'DIASVENCE' },
+                { data: 'SUBTOTAL' },
+                { data: 'IMPIVA' },
+                { data: 'DESCTO' },
+                { data: 'TOTAL' },
+                { data: 'CVEDOCTO' },
+                { data: 'TIPODOCTO' },
+                { data: 'FUM' }
             ],
             columnDefs: [
-                { 'title': 'NOMBRE', 'targets': 0},
-                { 'title': 'FECHA', 'targets': 1},
-                { 'title': 'DIA', 'targets': 2},
-                { 'title': 'ENTRADA', 'targets': 3},
-                { 'title': 'SALIDA', 'targets': 4},
-                { 'title': 'ATT', 'targets': 5}
+                { 'title': 'FECHA', 'targets': 0},
+                { 'title': 'CVE DOCUMENTO', 'targets': 1},
+                { 'title': 'CARGO', 'targets': 2},
+                { 'title': 'ABONO', 'targets': 3},
+                { 'title': 'SALDO', 'targets': 4},
+                { 'title': 'CONCEPTO', 'targets': 5},
+                { 'title': 'REFERENCIA', 'targets': 6},
+                { 'title': 'FECHA VENCE', 'targets': 7},
+                { 'title': 'SALDO DOCTO', 'targets': 8},
+                { 'title': 'SALDO MOVTO', 'targets': 9},
+                { 'title': 'DIAS VENCE', 'targets': 10},
+                { 'title': 'SUBTOTAL', 'targets': 11},
+                { 'title': 'IMP IVA', 'targets': 12},
+                { 'title': 'DESCUENTOS', 'targets': 13},
+                { 'title': 'TOTAL', 'targets': 14},
+                { 'title': 'CLAVE DOCTO', 'targets': 15},
+                { 'title': 'TIPO DOCTO', 'targets': 16},
+                { 'title': 'FUM', 'targets': 17}
             ],
             'createdRow': function ( row, data, index ) {
             },
@@ -114,7 +127,7 @@ $Columnas = array("USERID","NAME","FECHA","DIA","ENTRADA","SALIDA","ATT");//COLU
                         } );
                         // Data URL generated by http://dataurl.net/#dataurlmaker
                     },
-                    filename: 'ASISTENCIAS',
+                    filename: 'cliedoctagral',
                     extension: '.pdf',       
                     exportOptions: {
                         columns: ':visible',
@@ -127,7 +140,7 @@ $Columnas = array("USERID","NAME","FECHA","DIA","ENTRADA","SALIDA","ATT");//COLU
                     extend: 'csv',
                     text: 'CSV',
                     header:'true',
-                    filename: 'ASISTENCIAS',
+                    filename: 'cliedoctagral',
                     extension: '.csv',       
                     exportOptions: {
                         columns: ':visible',
@@ -140,7 +153,7 @@ $Columnas = array("USERID","NAME","FECHA","DIA","ENTRADA","SALIDA","ATT");//COLU
                     extend: 'excel',
                     message: 'PDF creado desde el sistema en linea del tayco.',
                     text: 'XLS',
-                    filename: 'ASISTENCIAS',
+                    filename: 'cliedoctagral',
                     extension: '.xlsx', 
                     exportOptions: {
                         columns: ':visible',
@@ -192,9 +205,11 @@ $Columnas = array("USERID","NAME","FECHA","DIA","ENTRADA","SALIDA","ATT");//COLU
                 }
             },
             'scrollY':        '60vh',
+            'scrollX':        true,
             'scrollCollapse': true,
             'paging':         false
         } );
     } );
     </script>
+
             

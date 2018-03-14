@@ -63,7 +63,7 @@
                 $('#btnEnviar').attr('disabled', 'disabled')
                 $.ajax({
                     type: "POST",
-                    url: 'tablaejercicios.php',
+                    url: 'tabla-admcontavsalm.php',
                     data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                     success: function(data) {
                         $('#CargaGif').hide();

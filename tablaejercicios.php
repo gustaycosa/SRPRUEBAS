@@ -1,11 +1,5 @@
 <?php
 
-require_once('lib/nusoap.php');
-
-ini_set("soap.wsdl_cache_enabled", "0");
-
-$Columnas = array("DIVISION","DEPTO","FAMILIA","DESCRIPCION","SALDO_INI_ALMACEN","TOTAL_ENTRADAS","TOTAL_SALIDAS","SALDO_INI_CONTA","DEBE","HABER","SALDO_FIN_CONTA","DIFERENCIA");
-
 $ColumnasDet = array("DIVISION","DEPTO","FAMILIA","DESCRIPCION","SALDO_INI_ALMACEN","E_RECPED","E_TREC_PEDIDOTALLER","E_TREC_REFACCIONES","E_ACOND","E_CANC","E_DEVOLUCION","E_FACTURA","E_GARANTIA","E_DEVPRO","S_DEVOLUCION","S_FACTURA","S_GARANTIA","S_TENV_PEDIDOTALLER","S_TENV_REFACCIONES","TOTAL_ENTRADAS","TOTAL_SALIDAS","SALDO_INI_CONTA","DEBE","HABER");
 //$De = date('Y-m-d');
 //$A = date('Y-m-d');
@@ -42,45 +36,175 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' style='white-space: nowrap;'>
-            <thead><tr>"; 
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
 
-                for($i=0; $i<count($Columnas); $i++){
-                    echo "<th>".$Columnas[$i]."</th>";
-                }
-
-            echo "</tr></thead>
-            <tfoot><tr>";
-
-                for($i=0; $i<count($Columnas); $i++){
-                    echo "<th>".$Columnas[$i]."</th>";
-                }
-
-     echo "</tr></tfoot><tbody>";
-
-     for($i=0; $i<count($Datos); $i++){
-        echo "<tr>";
-        for($j=0; $j<count($Columnas); $j++){
-            if($j==4 || $j==5 || $j==6){
-                echo "<td class='warning' width='auto'>".$Datos[$i]->$Columnas[$j]."</td>";
-            }else if($j==7 || $j==8 || $j==9){
-                echo "<td class='danger' width='auto'>".$Datos[$i]->$Columnas[$j]."</td>";
-            }
-            else{
-                echo "<td width='auto'>".$Datos[$i]->$Columnas[$j]."</td>";   
-            }
-        } 
-        echo "</tr>";
-     } 
-
-      echo "</tbody></table></div>";
-
+	$arreglo = [];
+	for($i=0; $i<count($Datos); $i++){
+		$arreglo[$i]=$Datos[$i];
+	}
 
 ?>
 
-<script type="text/javascript"> 
-        
-        <?php include("grid_full.php"); ?>
+     <script type="text/javascript"> 
+        var datos = 
+        <?php 
+            echo json_encode($arreglo);
+        ?>
+		;
+		<?php
+/*
+			$sGridNomb = '#gridfact';
+			$sWsNomb = 'vtas_netasfact';
+			$aColumnas = array("Fecha","Id_Sucursal","Serie","Folio","Id_cliente","Nombre","Concepto","Total");
+			$aTitulos =  array("Fecha","Id_Sucursal","Serie","Folio","Id_cliente","Nombre","Concepto","Total");
+			echo GrdRptShort($sGridNomb,$sWsNomb,$aColumnas,$aTitulos);
+            */
+		?>
 
-</script>
-            
+ $(document).ready(function() {
+         var table = $('#grid').DataTable({
+            data:datos,
+            columns: [
+                { data: 'DIVISION' },
+                { data: 'DEPTO' },
+                { data: 'FAMILIA' },
+                { data: 'DESCRIPCION' },
+                { data: 'SALDO_INI_ALMACEN' },
+                { data: 'TOTAL_ENTRADAS' },
+                { data: 'TOTAL_SALIDAS' },
+                { data: 'SALDO_INI_CONTA' },
+                { data: 'DEBE' },
+                { data: 'HABER' },
+                { data: 'SALDO_FIN_CONTA' },
+                { data: 'DIFERENCIA' }
+            ],
+            columnDefs: [
+                { 'title': 'DIVISION', 'targets': 0},
+                { 'title': 'DEPTO', 'targets': 1},
+                { 'title': 'FAMILIA', 'targets': 2},
+                { 'title': 'DESCRIPCION', 'targets': 3},
+                { 'title': 'SALDO INI ALM', 'targets': 4},
+                { 'title': 'TOTAL ENTRADAS', 'targets': 5},
+                { 'title': 'TOTAL SALIDAS', 'targets': 6},
+                { 'title': 'SALDO INI CONTA', 'targets': 7},
+                { 'title': 'DEBE', 'targets': 8},
+                { 'title': 'HABER', 'targets': 9},
+                { 'title': 'SALDO FIN CONTA', 'targets': 10},
+                { 'title': 'DIFERENCIA', 'targets': 11}
+            ],
+            'createdRow': function ( row, data, index ) {
+                $(row).attr({ id:data.Id_Maquinaria});
+                $(row).addClass('maquinaria');
+                $(row).children("td.img_maq").css('background', 'url("images/'+data.Id_Maquinaria+'.jpg") center no-repeat / cover');
+                $(row).children("td.img_maq").css('height', '150px');
+                $(row).children("td.img_maq").css('width', '150px');
+            },
+            dom: 'lfBrtip',    
+            paging: false,
+            searching: true,
+            ordering: false,
+            buttons: [
+                {
+                    extend: 'copy',
+                    message: 'PDF created by PDFMake with Buttons for DataTables.',
+                    text: 'Copiar',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'PDF',
+                    customize: function ( doc ) {
+                        // Splice the image in after the header, but before the table
+                        doc.content.splice( 1, 0, {
+                            margin: [ 0, 0, 0, 12 ],
+                            alignment: 'center'
+                        } );
+                        // Data URL generated by http://dataurl.net/#dataurlmaker
+                    },
+                    filename: 'contavsalm',
+                    extension: '.pdf',       
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'CSV',
+                    header:'true',
+                    filename: 'contavsalm',
+                    extension: '.csv',       
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'excel',
+                    message: 'PDF creado desde el sistema en linea del tayco.',
+                    text: 'XLS',
+                    filename: 'contavsalm',
+                    extension: '.xlsx', 
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    },
+                    customize: function( xlsx ) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        $('row:first c', sheet).attr( 's', '42' );
+                    }
+                },
+                {
+                    extend: 'print',
+                    message: 'PDF creado desde el sistema en linea del tayco.',
+                    text: 'Imprimir',
+                    exportOptions: {
+                        stripHtml: false,
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+            ],
+            'pagingType': 'full_numbers',
+            'lengthMenu': [[-1], ['Todo']],
+            'language': {
+                'sProcessing':    'Procesando...',
+                'sLengthMenu':    'Mostrar _MENU_ registros',
+                'sZeroRecords':   'No se encontraron resultados',
+                'sEmptyTable':    'Ningún dato disponible en esta tabla',
+                'sInfo':          'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+                'sInfoEmpty':     'Mostrando registros del 0 al 0 de un total de 0 registros',
+                'sInfoFiltered':  '(filtrado de un total de _MAX_ registros)',
+                'sInfoPostFix':   '',
+                'sSearch':        'Buscar:',
+                'sUrl':           '',
+                'sInfoThousands':  ',',
+                'sLoadingRecords': 'Cargando...',
+                'oPaginate': {
+                    'sFirst':    'Primero',
+                    'sLast':    'Último',
+                    'sNext':    'Siguiente',
+                    'sPrevious': 'Anterior'
+                },
+                'oAria': {
+                    'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
+                    'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+                }
+            },
+            'scrollY':        '60vh',
+            'scrollCollapse': true,
+            'paging':         false
+        } );
+    } );
+    </script>

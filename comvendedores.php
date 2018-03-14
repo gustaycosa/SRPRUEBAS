@@ -41,9 +41,11 @@
               <input type="hidden" name="TxtClave" id="TxtClave" value="">
                <input type="text"  name="TotalComisiones" id="TotalComisiones" class="form-control">
             </form>
+            
             <div class="respuesta"></div>
             <label id="lbltotal" style="font-size: 20px; background: yellow;"></label>
             <?php echo MdlSearchLG('MdlVenDet','Detalle vendedor');?>
+            <?php echo CargaGif();?>
         </div>
     </div>
 </body>
@@ -96,6 +98,7 @@
                 data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                 success: function(data) {
                     //$('#btnEnviar').removeAttr('disabled');
+                    $('#CargaGif').hide();
                     $("#DivMdlVenDet").html(data); // Mostrar la respuestas del script PHP.
                     $("#DivMdlVenDet").show();
                     $('#MdlVenDet').modal('show');

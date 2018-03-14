@@ -2,24 +2,19 @@
 <!DOCTYPE html>
 <html class="no-js">
 
-<?php include("Funciones.php"); ?>
-<?php echo Cabecera('Comisiones mecanicos (VENTAS)'); ?>
-<?php
-    $TituloPantalla = 'Comisiones mecanicos (VENTAS)';    
+<?php 
+    include("Funciones.php"); 
+    $TituloPantalla = 'Comisiones mecanicos (VENTAS)';
+    echo Cabecera($TituloPantalla); 
+    
 ?>
 <body>
 
     <div class="panel panel-default"> 
-        <div class="panel-heading"><h6 id="cabecera"><?php ECHO $TituloPantalla; /*Incluir modal nvo*/?></h6></div> 
+        <div class="panel-heading"><h6 id="cabecera"><?php echo $TituloPantalla; /*Incluir modal nvo*/?></h6></div> 
         <div class="panel-body"> 
 
             <form id="formulario" method="POST" class="form-inline">
-              <div class="form-group">
-                  <label for="inputFechaIni">Empresa:</label>
-                  <select id="CmbEmpresa" name="CmbEmpresa" class="form-control">
-                      <option>TAYCOSA</option>
-                  </select>
-              </div>
               <div class="form-group">
                   <label for="inputFechaIni" class="form-control" >Mecanico:</label>
                   
@@ -40,6 +35,7 @@
               <button type="submit" id="btnEnviar" class="btn btn-primary btn-sm" onMouseOver="">Consultar</button>
             </form>
             <div class="respuesta"></div>
+            <?php echo CargaGif();?>
         </div>
     </div>
 </body>
@@ -51,17 +47,20 @@
     $(function () {
          $("form").on('submit', function (e) {
              e.preventDefault();
+             $('#CargaGif').show();
              $('#btnEnviar').attr('disabled', 'disabled')
              $.ajax({
                    type: "POST",
-                   url: 'commecanicosvtas-tabla.php',
+                   url: 'tabla-admcommecanicosvtas.php',
                    data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                    success: function(data)
                    {
+                       $('#CargaGif').hide();
                        $('#btnEnviar').removeAttr('disabled');
                        $(".respuesta").html(data); // Mostrar la respuestas del script PHP.
                    },
                     error: function(error) {
+                        $('#CargaGif').hide();
                         console.log(error);
                         alert('Algo salio mal :S');
                     }

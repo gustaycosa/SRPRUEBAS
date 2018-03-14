@@ -1,13 +1,5 @@
 <?php
 
-require_once('lib/nusoap.php');
-
-ini_set("soap.wsdl_cache_enabled", "0");
-
-$Columnas = array("TipoServicio","Caso","Movimiento","Id_MO","Fecha","Articulo","Descripcion","HorasReales","HorasFacturables","PrecioMOServicio","ImporteMOServicio","TotalMOServicio","Facturas","Clasificacion","Tipo","FacturaActual","FacturaAnterior","HorasFacturadas","PrecioUnitario","ImporteMOFactura","TotalMOFactura","Comision","cliente");//COLUMNAS GRID
-
-
-
 try{ 
     
     if ($_POST){
@@ -25,7 +17,7 @@ try{
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         //parametros de la llamada
         $parametros = array();
-        $parametros['sId_Empresa'] = $Empresa;
+        $parametros['sId_Empresa'] = 'TAYCOSA';
         $parametros['dtFechaIni'] = $newformat1;
         $parametros['dtFechaFin'] = $newformat2;
         $parametros['sClave'] = $clave;
@@ -44,155 +36,201 @@ try{
 } catch(SoapFault $e){
   var_dump($e);
 }
+    echo "<div class='table-responsive'>
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>"; 
+            echo "</table></div>";
 
-echo "<div class='table-responsive'>
-	<table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' style='white-space: nowrap;'>
-	 	<thead><tr>"; 
-		
-			for($i=0; $i<count($Columnas); $i++){
-		  		echo "<th>".$Columnas[$i]."</th>";
-			}
-
-	  	echo "</tr></thead>
-	 	<tfoot><tr>";
-
-			for($i=0; $i<count($Columnas); $i++){
-		  		echo "<th></th>";
-			}
-	  	
- echo "<tbody>";
-    
- for($i=0; $i<count($Datos); $i++){
-    echo "<tr DATAID=".$Datos[$i]->$Columnas[$j].">";
-    for($j=0; $j<count($Columnas); $j++){
-        echo "<td width='auto'>".$Datos[$i]->$Columnas[$j]."</td>";
-    } 
-    echo "</tr>";
- } 
-    
-  echo "</tbody></table></div>";
+	$arreglo = [];
+	for($i=0; $i<count($Datos); $i++){
+		$arreglo[$i]=$Datos[$i];
+	}
 
 ?>
 
 <script type="text/javascript"> 
+        var datos = <?php echo json_encode($arreglo);?> ;
         
-    $('#grid').DataTable( {
-        fixedHeader: true,
-        dom: 'lfBrtip',            
-        buttons: [
-            {
-                extend: 'colvis',
-                columns: ':not(:first-child)',
-                collectionLayout: 'fixed two-column',
-                text: 'Ocultar columnas'
-            },
-            {
-                extend: 'copy',
-                message: 'PDF created by PDFMake with Buttons for DataTables.',
-                text: 'Copiar',
-                exportOptions: {
-                    modifier: {
-                        page: 'all'
+		<?php
+        /*
+			$sGridNomb = '#grid';
+			$sWsNomb = 'vtas_netas';
+			$aColumnas = array("nombre","VtasNetas","AbonosFactMes","TotalCobradoMes");
+			$aTitulos = array("nombre","Ventas netas","Abonos Mes","Total Mes");
+			echo GrdRptShort($sGridNomb,$sWsNomb,$aColumnas,$aTitulos);
+        */
+        /*
+        	$sGridNomb = '#grid';
+			$sWsNomb = 'vtas_netas';
+			$aColumnas = array("nombre","VtasNetas","AbonosFactMes","TotalCobradoMes");
+			$aTitulos = array("nombre","Ventas netas","Abonos Mes","Total Mes");
+        
+        */
+		?>
+   $(document).ready(function() {
+         var table = $('#grid').DataTable({
+            data:datos,
+            columns: [
+                { data: 'TipoServicio' },
+                { data: 'Movimiento' },
+                { data: 'Id_MO' },
+                { data: 'Nombre' },
+                { data: 'Fecha' },
+                { data: 'Articulo' },
+                { data: 'Descripcion' },
+                { data: 'HorasReales' },
+                { data: 'HorasFacturables' },
+                { data: 'PrecioMOServicio' },
+                { data: 'ImporteMOServicio' },
+                { data: 'TotalMOServicio' },
+                { data: 'Facturas' },
+                { data: 'Clasificacion' },
+                { data: 'Tipo' },
+                { data: 'FacturaActual' },
+                { data: 'FacturaAnterior' },
+                { data: 'HorasFacturadas' },
+                { data: 'PrecioUnitario' },
+                { data: 'ImporteMO' },
+                { data: 'ImporteMOFactura' },
+                { data: 'Comision' },
+                { data: 'cliente' }
+            ],
+            columnDefs: [
+                { 'title': 'TIPO SERV','targets': 0},
+                { 'title': 'MOVIMIENTO','targets': 1},
+                { 'title': 'ID MO','targets': 2},
+                { 'title': 'NOMBRE','targets': 3},
+                { 'title': 'FECHA','targets': 4},
+                { 'title': 'ARTICULO','targets': 5},
+                { 'title': 'DESCRIPCION','targets': 6},
+                { 'title': 'HRS REALES','targets': 7},
+                { 'title': 'HRS FACT','targets': 8},
+                { 'title': 'PRECIO MO','targets': 9},
+                { 'title': 'IMPORTE MO','targets': 10},
+                { 'title': 'TOTAL MO','targets': 11},
+                { 'title': 'FACTURAS','targets': 12},
+                { 'title': 'CLASIFICACION','targets': 13},
+                { 'title': 'TIPO','targets': 14},
+                { 'title': 'FACT ACTUAL','targets': 15},
+                { 'title': 'FACT ANTERIOR','targets': 16},
+                { 'title': 'HRS FACT','targets': 17},
+                { 'title': 'PRECIO UNITARIO','targets': 18},
+                { 'title': 'IMPORTE MO','targets': 19},
+                { 'title': 'IMPORTE MO FACT','targets': 20},
+                { 'title': 'COMISION','targets': 21},
+                { 'title': 'CLIENTE','targets': 22}
+            ],
+            'createdRow': function ( row, data, index ) {
+            },  
+            fixedHeader: true,
+            dom: 'lfBrtip', 
+            buttons: [
+                {
+                    extend: 'copy',
+                    message: 'PDF created by PDFMake with Buttons for DataTables.',
+                    text: 'Copiar',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all'
+                        }
                     }
-                }
-            },
-            {
-                extend: 'pdf',
-                text: 'PDF',
-                footer:'true',
-                customize: function ( doc ) {
-                    // Splice the image in after the header, but before the table
-                    doc.content.splice( 1, 0, {
-                        margin: [ 0, 0, 0, 12 ],
-                        alignment: 'center',
-                        <?php include("ImgHeader.php"); ?>
-                    } );
-                    // Data URL generated by http://dataurl.net/#dataurlmaker
                 },
-                filename: 'GridN',
-                extension: '.pdf',       
-                exportOptions: {
-                    columns: [ 1, 4, 6, 8, 11, 21],
-                    modifier: {
-                        page: 'all'
+                {
+                    extend: 'pdf',
+                    text: 'PDF',
+                    customize: function ( doc ) {
+                        // Splice the image in after the header, but before the table
+                        doc.content.splice( 1, 0, {
+                            margin: [ 0, 0, 0, 12 ],
+                            alignment: 'center'
+                        } );
+                        // Data URL generated by http://dataurl.net/#dataurlmaker
+                    },
+                    filename: 'commecanicos',
+                    extension: '.pdf',       
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
                     }
-                }
-            },
-            {
-                extend: 'csv',
-                text: 'CSV',
-                header:'true',
-                footer:'true',
-                filename: 'GridN',
-                extension: '.csv',       
-                exportOptions: {
-                    columns: ':visible',
-                    modifier: {
-                        page: 'all'
+                },
+                {
+                    extend: 'csv',
+                    text: 'CSV',
+                    header:'true',
+                    filename: 'commecanicos',
+                    extension: '.csv',       
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
                     }
-                }
-            },
-            {
-                extend: 'excel',
-                message: 'PDF creado desde el sistema\n en linea del tayco.',
-                footer:'true',
-                text: 'XLS',
-                filename: 'GridN',
-                extension: '.xlsx', 
-                exportOptions: {
-                    columns: ':visible',
-                    modifier: {
-                        page: 'all'
+                },
+                {
+                    extend: 'excel',
+                    message: 'PDF creado desde el sistema en linea del tayco.',
+                    text: 'XLS',
+                    filename: 'commecanicos',
+                    extension: '.xlsx', 
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    },
+                    customize: function( xlsx ) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        $('row:first c', sheet).attr( 's', '42' );
                     }
-                }
-            },
-            {
-                extend: 'print',
-                message: 'PDF creado desde el sistema\n en linea del tayco.',
-                footer:'true',
-                text: 'Imprimir',
-                exportOptions: {
-                    columns: [ 1, 4, 6, 8, 11, 21],
-                    stripHtml: false,
-                    modifier: {
-                        page: 'all'
+                },
+                {
+                    extend: 'print',
+                    message: 'PDF creado desde el sistema en linea del tayco.',
+                    text: 'Imprimir',
+                    exportOptions: {
+                        stripHtml: false,
+                        modifier: {
+                            page: 'all'
+                        }
                     }
-                }
+                },
+            ],
+            'pagingType': 'full_numbers',
+            'lengthMenu': [[-1], ['Todo']],
+            'language': {
+                'sProcessing':    'Procesando...',
+                'sLengthMenu':    'Mostrar _MENU_ registros',
+                'sZeroRecords':   'No se encontraron resultados',
+                'sEmptyTable':    'Ningún dato disponible en esta tabla',
+                'sInfo':          'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+                'sInfoEmpty':     'Mostrando registros del 0 al 0 de un total de 0 registros',
+                'sInfoFiltered':  '(filtrado de un total de _MAX_ registros)',
+                'sInfoPostFix':   '',
+                'sSearch':        'Buscar:',
+                'sUrl':           '',
+                'sInfoThousands':  ',',
+                'sLoadingRecords': 'Cargando...',
+                'oPaginate': {
+                    'sFirst':    'Primero',
+                    'sLast':    'Último',
+                    'sNext':    'Siguiente',
+                    'sPrevious': 'Anterior'
+                },
+                'oAria': {
+                    'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
+                    'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+                },
+            'scrollY':        '60vh',
+            'scrollX':        true,
+            'scrollCollapse': true,
+            'paging':         false
             },
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todo"]],
-        "language": {
-            "sProcessing":    "Procesando...",
-            "sLengthMenu":    "Mostrar _MENU_ registros",
-            "sZeroRecords":   "No se encontraron resultados",
-            "sEmptyTable":    "Ningún dato disponible en esta tabla",
-            "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix":   "",
-            "sSearch":        "Buscar:",
-            "sUrl":           "",
-            "sInfoThousands":  ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst":    "Primero",
-                "sLast":    "Último",
-                "sNext":    "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            },
-        "scrollY": '50vh',
-        "scrollX": true,
-        "paging": false,
-        responsive: true,
-        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
-            //var api2 = this.api(), data;
+            var api_total = this.api(), data;
+            var api_abono = this.api(), data;
+            var api_vtas = this.api(), data;
             
             // Remove the formatting to get integer data for summation
             var intVal = function ( i ) {
@@ -201,63 +239,45 @@ echo "<div class='table-responsive'>
                     typeof i === 'number' ?
                         i : 0;
             };
-            /*
-            // Remove the formatting to get integer data for summation
-            var intVal2 = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
-            */
-
             // Total over all pages
-            total = api
+            total_total = api_total
                 .column( 21 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
+
             // Total over this page
             pageTotal = api
-                .column( 21, { page: 'current'} )
+                .column( 3, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
             // Update footer
-            $( api.column( 21 ).footer() ).html(
-                '$'+ total +' total'
-            );
+            $( api_total.column( 21 ).footer() ).html('$'+ total_total.toFixed(2) );    
+            
+            var COMIR = this.api(), data;
+            var COMIM = this.api(), data;
+            var COMIVC = this.api(), data;
+            var COMIMO = this.api(), data;
+            var COMIMOP = this.api(), data;
+            var COMITRA = this.api(), data;
             
             /*
-            // Total over all pages 2
-            total2 = api2
-                .column( 5 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal2(a) + intVal2(b);
-                }, 0 );
-
-            // Total over this page
-            pageTotal2 = api2
-                .column( 5, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal2(a) + intVal2(b);
-                }, 0 );
-
+            totalFinal= total33 + total34 + total35 + total36 + total37 + total38 
             // Update footer
-            $( api2.column( 5 ).footer() ).html(
-                '$'+pageTotal2 +' ( $'+ total2 +' total)'
+            $( api.column( 38 ).footer() ).html(
+                '$'+ total38 +' total <br>' 
+                + '$' + totalFinal.toFixed(2) + ' total final'
             );
+            
+            $("#TotalComisiones").val('$' + totalFinal.toFixed(2) + ' COMISION TOTAL');
             */
         }
-
+        } );
     } );
-
-
-</script>
-            
+        
+    </script>
