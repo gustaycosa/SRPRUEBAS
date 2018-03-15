@@ -286,9 +286,10 @@ try{
             totalCobrado = total_ref * 50;
             totalRecepcion = totalCobrado / 100 * 0.5;
             
-            
+            /*
             $("#lbltotal").empty();
             $("#lbltotal").append('COMISIONES TOTALES REF = $' + total_ref.toFixed(2) + '-> COBRADO = $'+ totalCobrado.toFixed(2) +' -> COMISION RECEPCION = $' + totalRecepcion.toFixed(2));
+            */
         }
         } );
     } );

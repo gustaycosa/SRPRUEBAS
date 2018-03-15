@@ -2,37 +2,37 @@
 <!DOCTYPE html>
 <html class="no-js">
 
-<?php include("Funciones.php"); ?>
-<?php echo Cabecera('Existencias'); ?>
-<?php
-	$TituloPantalla = "Reporte de Existencias";//TITULO EN PANTALLA
+<?php include("Funciones.php");
+    $TituloPantalla = "Reporte de Existencias";
+    echo Cabecera($TituloPantalla);
 ?>
 
     <body>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h6>
-                    <?php echo $TituloPantalla; /*Incluir modal nvo*/?>
-                </h6>
+                <h6><?php echo $TituloPantalla; /*Incluir modal nvo*/?></h6>
             </div>
             <div class="panel-body">
-                <?php $Columnas; /*Incluir modal nvo*/?>
-                <form id="formulario" method="POST" class="form-horizontal">
-                    <div class="col-sm-2">
+                <form id="formulario" method="POST" class="form-inline">
+                    <div class="form-group">
                         <?php echo CmbCualquieras('depto','nombre',"deptos"); ?>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="form-group">
                         <?php echo CmbCualquieras("division","nombre","divisiones"); ?>
                     </div>
-                    <div id="xxx" class="form-group col-sm-2">
+                    <div id="xxx" class="form-group">
                         <?php echo CmbGenerico(' ',' '); ?>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="form-group">
                         <input type="text" name="Txtfiltro" id="Txtfiltro" value="" class="form-control" placeholder="Palabras clave" />
                     </div>
-                    <input type="submit" id="btnEnviar" class="btn btn-primary btn-sm col-sm-2" value="Consultar" onMouseOver="">
+                    <div class="form-group">
+                        <button type="submit" id="btnEnviar" class="btn btn-primary btn-sm" onMouseOver="">Consultar</button>
+                    </div>
                 </form>
+                <div class="controles form-horizontal"></div>
                 <div class="respuesta"></div>
+                <?php echo CargaGif();?>
             </div>
         </div>
     </body>
@@ -74,16 +74,19 @@
 
         $("form").on('submit', function(e) {
             e.preventDefault();
+            $('#CargaGif').show();
             $('#btnEnviar').attr('disabled', 'disabled')
             $.ajax({
                 type: "POST",
-                url: 'tablaExistencia.php',
+                url: 'tabla-admexistencias.php',
                 data: $("form").serialize(),
                 success: function(data) {
+                    $('#CargaGif').hide();
                     $('#btnEnviar').removeAttr('disabled');
                     $(".respuesta").html(data); // Mostrar la respuestas del script PHP.
                 },
                 error: function(error) {
+                    $('#CargaGif').hide();
                     console.log(error);
                     alert('Algo salio mal :S');
                 }

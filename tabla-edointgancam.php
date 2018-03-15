@@ -1,9 +1,5 @@
 <?php
 
-$Columnas = array("Id_ReporteContable","ReporteContable","ConceptoCtb","FEB_2017","MAR_2017","ABR_2017","MAY_2017","JUN_2017","JUL_2017");
-
-$Titulos = array("CUENTA","FECHA","POLIZA","CONCEPTO","IMPORTE");
-
 try{ 
     
     if ($_POST){
@@ -35,70 +31,162 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' >></table></div>";
-/*
-        <thead><tr>"; 
-            for($i=0; $i<count($Titulos); $i++){
-                echo "<th>".$Titulos[$i]."</th>";
-            }
-            echo "</tr></thead><tfoot><tr>";
-            for($i=0; $i<count($Titulos); $i++){
-                echo "<th>".$Titulos[$i]."</th>";
-            }
-            echo "</tr></tfoot><tbody>";
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
 
-     for($i=0; $i<count($Datos); $i++){
-            echo "<tr>";
-                echo "<td>".$Columnas[2]."</td>";
-                echo "<td>".$Columnas[3]."</td>";
-                echo "<td>".$Columnas[3]."</td>";
-                echo "<td>".$Columnas[3]."</td>";
-                echo "<td>".$Columnas[3]."</td>";
-         
-            echo "</tr>";
-         /*
-        if($i==0){
-            echo "<tr><td><H4>".$Datos[$i]->$Columnas[1]."</H4></td><td></td><td></td><td></td><td></td></tr>";
-            $ConceptoDivision = $bandera;
-        }else if($bandera¡==$ConceptoDivision){
-            echo "<tr><td></td><td>TOTAL</td><td><H4>".$Datos[$i]->$Columnas[$j]."</H4></td></tr>";
-            echo "<tr><td><H4>".$Datos[$i]->$Columnas[1]."</H4></td><td></td><td></td></tr>";
-            $ConceptoDivision = $bandera;
-        } else{
-            echo "<tr>";
-            $Valor1 = number_format($Datos[$i]->$Columnas[7], 2, ',', ' ');
-            echo "<td>".$Datos[$i]->$Columnas[2]."</td><td class='text-right'>".$Datos[$i]->$Columnas[7]."</td><td></td>";
-            $Valor2 = $Datos[$i]->$Columnas[7] + $Datos[$i]->$Columnas[6];
-            $Suma = $Suma + $Datos[$i]->$Columnas[6];
-            echo "<td class='text-right'>".number_format($Valor2, 2, ',', ' ')."</td><td></td>";
-            echo "</tr>";
-            $ConceptoDivision = $bandera;
-        }
-         */
-        
-
-$arreglo = [];
-for($i=0; $i<count($Datos); $i++){
-    $arreglo[$i]=$Datos[$i];
-}
-        //print_r($arreglo);
-        //echo number_format($Suma, 2, ',', ' ');
+	$arreglo = [];
+	for($i=0; $i<count($Datos); $i++){
+		$arreglo[$i]=$Datos[$i];
+	}
 
 ?>
 
-    <script type="text/javascript"> 
+     <script type="text/javascript"> 
         var datos = 
         <?php 
             echo json_encode($arreglo);
         ?>
-        ;
+		;
 		<?php
-
-			$sGridNomb = '#grid';
-			$sWsNomb = 'gancambiaria';
-            $aColumnas = array("Tipo","Sucursal","Fecha","Concepto","Debe","Haber","Total","TF");
-            $aTitulos = array("Tipo","Sucursal","Fecha","Concepto","Debe","Haber","Total","TF");
+/*
+			$sGridNomb = '#gridfact';
+			$sWsNomb = 'vtas_netasfact';
+			$aColumnas = array("Fecha","Id_Sucursal","Serie","Folio","Id_cliente","Nombre","Concepto","Total");
+			$aTitulos =  array("Fecha","Id_Sucursal","Serie","Folio","Id_cliente","Nombre","Concepto","Total");
 			echo GrdRptShort($sGridNomb,$sWsNomb,$aColumnas,$aTitulos);
+            */
 		?>
 
+ $(document).ready(function() {
+         var table = $('#grid').DataTable({
+            data:datos,
+            columns: [
+                { data: 'Id_Concepto' },
+                { data: 'Tipo' },
+                { data: 'Sucursal' },
+                { data: 'Fecha' },
+                { data: 'Concepto' },
+                { data: 'Debe' },
+                { data: 'Haber' },
+                { data: 'Total' }
+            ],
+            columnDefs: [
+                { 'title': 'ID CONCEPTO', 'targets': 0},
+                { 'title': 'TIPO', 'targets': 1},
+                { 'title': 'SUCURSAL', 'targets': 2},
+                { 'title': 'FECHA', 'targets': 3},
+                { 'title': 'CONCEPTO', 'targets': 4},
+                { 'title': 'DEBE', 'targets': 5},
+                { 'title': 'HABER', 'targets': 6},
+                { 'title': 'TOTAL', 'targets': 7}
+            ],
+            'createdRow': function ( row, data, index ) {
+            },
+            dom: 'lfBrtip',    
+            paging: false,
+            searching: true,
+            ordering: false,
+            buttons: [
+                {
+                    extend: 'copy',
+                    message: 'PDF created by PDFMake with Buttons for DataTables.',
+                    text: 'Copiar',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'PDF',
+                    customize: function ( doc ) {
+                        // Splice the image in after the header, but before the table
+                        doc.content.splice( 1, 0, {
+                            margin: [ 0, 0, 0, 12 ],
+                            alignment: 'center'
+                        } );
+                        // Data URL generated by http://dataurl.net/#dataurlmaker
+                    },
+                    filename: 'vtas_netasfact',
+                    extension: '.pdf',       
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'CSV',
+                    header:'true',
+                    filename: 'vtas_netasfact',
+                    extension: '.csv',       
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'excel',
+                    message: 'PDF creado desde el sistema en linea del tayco.',
+                    text: 'XLS',
+                    filename: 'vtas_netasfact',
+                    extension: '.xlsx', 
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    },
+                    customize: function( xlsx ) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        $('row:first c', sheet).attr( 's', '42' );
+                    }
+                },
+                {
+                    extend: 'print',
+                    message: 'PDF creado desde el sistema en linea del tayco.',
+                    text: 'Imprimir',
+                    exportOptions: {
+                        stripHtml: false,
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+            ],
+            'pagingType': 'full_numbers',
+            'lengthMenu': [[-1], ['Todo']],
+            'language': {
+                'sProcessing':    'Procesando...',
+                'sLengthMenu':    'Mostrar _MENU_ registros',
+                'sZeroRecords':   'No se encontraron resultados',
+                'sEmptyTable':    'Ningún dato disponible en esta tabla',
+                'sInfo':          'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+                'sInfoEmpty':     'Mostrando registros del 0 al 0 de un total de 0 registros',
+                'sInfoFiltered':  '(filtrado de un total de _MAX_ registros)',
+                'sInfoPostFix':   '',
+                'sSearch':        'Buscar:',
+                'sUrl':           '',
+                'sInfoThousands':  ',',
+                'sLoadingRecords': 'Cargando...',
+                'oPaginate': {
+                    'sFirst':    'Primero',
+                    'sLast':    'Último',
+                    'sNext':    'Siguiente',
+                    'sPrevious': 'Anterior'
+                },
+                'oAria': {
+                    'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
+                    'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+                }
+            },
+            'scrollY':        '60vh',
+            'scrollCollapse': true,
+            'paging':         false
+        } );
+    } );
     </script>

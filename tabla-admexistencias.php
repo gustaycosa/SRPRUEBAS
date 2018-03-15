@@ -1,29 +1,27 @@
 <?php
 
-$Columnas = array("Id_ConceptoCtb","ConceptoCtb","Mes_Actual","Mes_Anterior","Variacion","Acumulado_ene","Prom_mensual","Ingresos_gen","Util_per_generada","Ano_Act","Ano_Ant","TF");
-$titulos = array("Id","CONCEPTO CONTABLE","MES ACTUAL","MES ANTERIOR","VARIACION","ACUMULADO ENERO","PROMDERIO MENSUAL","INGRESOS GENERADOS","UTILIDAD/PERDIDA","AÑO ACTUAL","AÑO ANTERIOR","TF");
-
 try{ 
     
     if ($_POST){
-        
-        $Ejercicio =  $_POST["TxtEjercicio"]; 
-        $Mes =  $_POST["TxtMes"]; 
+
+        $Empresa = "TAYCOSA";
+        $Division = $_POST["Cmbdivisiones"]; 
+        $Depto = $_POST["Cmbdeptos"];
+        $Familia = $_POST["Cmbfamilia"];
+        $Filtro = $_POST["Txtfiltro"];
 
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         //parametros de la llamada
         $parametros = array();
-        $parametros['Empresa'] = 'TAYCOSA';
-        $parametros['Mes'] = $Mes;
-        $parametros['Ejercicio'] = $Ejercicio;
-        //ini_set("soap.wsdl_cache_enabled", "0");
-        //Invocación al web service
-        $WS = new SoapClient($WebService, $parametros);
-        //recibimos la respuesta dentro de un objeto
-        $result = $WS->edogastostaller($parametros);
-        $xml = $result->edogastostallerResult->any;
-        //$result = $WS->edogastostaller($parametros);
-        //$xml = $result->edogastostallerResult->any;
+        $parametros['sId_Empresa'] = 'TAYCOSA';
+        $parametros['sDivision'] = $Division;
+        $parametros['sDepto'] = $Depto;
+        $parametros['sFamilia'] = $Familia;
+        $parametros['sText'] = $Filtro;
+
+        $WS = new SoapClient($WebService,$parametros);
+        $result = $WS->ExistenciasSelect($parametros);
+        $xml = $result->ExistenciasSelectResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
 //echo $xml;
@@ -34,16 +32,16 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact nowrap' cellspacing='0' width='100%'></table></div>"; 
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
 
-$arreglo = [];
-for($i=0; $i<count($Datos); $i++){
-    $arreglo[$i]=$Datos[$i];
-}
+	$arreglo = [];
+	for($i=0; $i<count($Datos); $i++){
+		$arreglo[$i]=$Datos[$i];
+	}
 
 ?>
 
-<script type="text/javascript"> 
+     <script type="text/javascript"> 
         var datos = 
         <?php 
             echo json_encode($arreglo);
@@ -63,45 +61,28 @@ for($i=0; $i<count($Datos); $i++){
          var table = $('#grid').DataTable({
             data:datos,
             columns: [
-                { data: 'ConceptoCtb' },
-                { data: 'Mes_Actual' },
-                { data: 'Mes_Anterior' },
-                { data: 'Variacion' },
-                { data: 'Acumulado_ene' },
-                { data: 'Prom_mensual' },
-                { data: 'Ingresos_gen' },
-                { data: 'Util_per_generada' },
-                { data: 'Ano_Act' },
-                { data: 'Ano_Ant' }
+                { data: 'ID_SUCURSAL' },
+                { data: 'ARANCEL' },
+                { data: 'NOMBRE' },
+                { data: 'CODIGO' },
+                { data: 'DIVISION' },
+                { data: 'DEPTO' },
+                { data: 'FAMILIA' },
+                { data: 'EXISTENCIA' },
+                { data: 'PRECIOVENTA' }
             ],
             columnDefs: [
-                { 'title': 'CONCEPTO', 'targets': 0},
-                { 'title': 'MES ACTUAL', 'targets': 1},
-                { 'title': 'MES ANTERIOR', 'targets': 2},
-                { 'title': 'VARIACION', 'targets': 3},
-                { 'title': 'ACUMULADO ENERO', 'targets': 4},
-                { 'title': 'PROMEDIO MENSUAL', 'targets': 5},
-                { 'title': 'INGRESOS GEN', 'targets': 6},
-                { 'title': 'UTIL/PER GEN', 'targets': 7},
-                { 'title': 'AÑO ACTUAL', 'targets': 8},
-                { 'title': 'AÑO ANT', 'targets': 9}
+                { 'title': 'SUCURSAL', 'targets': 0},
+                { 'title': 'ARANCEL', 'targets': 1},
+                { 'title': 'NOMBRE', 'targets': 2},
+                { 'title': 'CODIGO', 'targets': 3},
+                { 'title': 'DIVISION', 'targets': 4},
+                { 'title': 'DEPTO', 'targets': 5},
+                { 'title': 'FAMILIA', 'targets': 6},
+                { 'title': 'EXISTENCIA', 'targets': 7},
+                { 'title': 'PRECIO VENTA', 'targets': 8}
             ],
-            "createdRow": function ( row, data, index ) {
-                $(row).attr({ id:data.Id_ConceptoCtb});
-                $(row).addClass(data.REF);
-                if ( data.TF == 'T1' ) {
-                    $(row).addClass('T1');
-                }
-                else if ( data.TF == 'T2' ) {
-                    $(row).addClass('T2');
-                }
-                else if ( data.TF == 'T3' ) {
-                    $(row).addClass('T3');
-                }
-                else if ( data.TF == 'N' ) {
-                    $(row).addClass('N');
-                    $(row).hide();
-                }
+            'createdRow': function ( row, data, index ) {
             },
             dom: 'lfBrtip',    
             paging: false,
@@ -207,18 +188,9 @@ for($i=0; $i<count($Datos); $i++){
                 }
             },
             'scrollY':        '60vh',
+            'scrollX':        'true',
             'scrollCollapse': true,
             'paging':         false
         } );
     } );
-
-    $(function(){
-        $('.T1').click(function() {                
-            if ($('.N').css("display") != "none" ) {
-                $('.N').hide(); 
-            }else{
-                $('.N').show(); 
-            }
-        });
-    });
     </script>

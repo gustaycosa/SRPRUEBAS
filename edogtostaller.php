@@ -71,7 +71,7 @@
                 $('#btnEnviar').attr('disabled', 'disabled')
                 $.ajax({
                     type: "POST",
-                    url: 'tabla-gtostaller.php',
+                    url: 'tabla-edogtostaller.php',
                     data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                     success: function(data) {
                         $('#btnEnviar').removeAttr('disabled');

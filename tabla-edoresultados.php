@@ -57,8 +57,6 @@ $arreglo = [];
 for($i=0; $i<count($Datos); $i++){
     $arreglo[$i]=$Datos[$i];
 }
-        //print_r($arreglo);
-        //echo number_format($Suma, 2, ',', ' ');
 
 ?>
 
@@ -72,7 +70,7 @@ for($i=0; $i<count($Datos); $i++){
 
             var table = $('#grid').DataTable({
                 data:datos,
-              //$Columnas = array("Id_ConceptoCtb","ConceptoCtb","Mes_Actual","Mes_Anterior","Acumulado_Act","Acumulado_Ant","TF"); 
+               //$Columnas = array("Id_ConceptoCtb","ConceptoCtb","Mes_Actual","Mes_Anterior","Acumulado_Act","Acumulado_Ant","TF"); 
                 columns: [
                     { data: "ConceptoCtb" },
                     { data: "Mes_Actual" },
