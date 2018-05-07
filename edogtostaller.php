@@ -26,7 +26,7 @@
                         <select id="TxtMes" name="TxtMes" class="form-control">
                             <option value="1">Enero</option>
                             <option value="2">Febrero</option>
-                            <option value="2">Marzo</option>
+                            <option value="3">Marzo</option>
                             <option value="4">Abril</option>
                             <option value="5">Mayo</option>
                             <option value="6">Junio</option>
@@ -46,6 +46,7 @@
                 </div>
                 <div class="respuesta">
                 </div>
+                <?php echo CargaGif();?>
             </div>
         </div>
     </body>
@@ -65,8 +66,9 @@
 
     <script type="text/javascript">
         $(function() {
-
+            
             $("form").on('submit', function(e) {
+                $('#CargaGif').show();
                 e.preventDefault();
                 $('#btnEnviar').attr('disabled', 'disabled')
                 $.ajax({
@@ -74,11 +76,13 @@
                     url: 'tabla-edogtostaller.php',
                     data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                     success: function(data) {
+                        $('#CargaGif').hide();
                         $('#btnEnviar').removeAttr('disabled');
                         $(".respuesta").html(data); // Mostrar la respuestas del script PHP.
                         $(".respuesta").show();
                     },
                     error: function(error) {
+                        $('#CargaGif').hide();
                         console.log(error);
                         alert('Algo salio mal :S');
                     }

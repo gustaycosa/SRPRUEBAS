@@ -26,7 +26,7 @@
                         <select id="TxtMes" name="TxtMes" class="form-control">
                             <option value="1">Enero</option>
                             <option value="2">Febrero</option>
-                            <option value="2">Marzo</option>
+                            <option value="3">Marzo</option>
                             <option value="4">Abril</option>
                             <option value="5">Mayo</option>
                             <option value="6">Junio</option>
@@ -53,17 +53,6 @@
 
     <?php echo Script(); ?>
 
-    <script type="text/javascript"> 
-        
-        $(document).ready(function() {
-            var table = $('#grid').DataTable({
-                scrollY: 200,
-                scrollX: true
-            } );
-        } );
-
-    </script>
-
     <script type="text/javascript">
         $(function() {
 
@@ -74,7 +63,7 @@
                 $('#btnEnviar').attr('disabled', 'disabled')
                 $.ajax({
                     type: "POST",
-                    url: 'tabla-gastosventa.php',
+                    url: 'tabla-edogtosventa.php',
                     data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                     success: function(data) {
 						$('#CargaGif').hide();

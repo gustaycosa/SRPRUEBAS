@@ -28,7 +28,7 @@
                         <select id="TxtMes" name="TxtMes" class="form-control">
                             <option value="1">Enero</option>
                             <option value="2">Febrero</option>
-                            <option value="2">Marzo</option>
+                            <option value="3">Marzo</option>
                             <option value="4">Abril</option>
                             <option value="5">Mayo</option>
                             <option value="6">Junio</option>

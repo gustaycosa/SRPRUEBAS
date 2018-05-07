@@ -26,7 +26,7 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot></table></div>";
 
 	$arreglo = [];
 	for($i=0; $i<count($Datos); $i++){
@@ -70,30 +70,59 @@ try{
                     "className":      'img_maq',
                     "orderable":      true,
                     "data":           '',
-                    "defaultContent": ''
+                    "defaultContent": 'ver'
                 },
-                { data: 'maquinaria' },
-                { data: 'HRS_MO' },
-                { data: 'HRS_MO_BIT' },
-                { data: 'COSTO_MO' },
-                { data: 'CostoCompra' },
-                { data: 'Acondicionamiento' }
+                { data: 'Caso' },
+                { data: 'Estatus' },
+                { data: 'TipoServicio' },
+                { data: 'FechaRecepcion' },
+                { data: 'FechaCompromiso' },
+                { data: 'Id_Maquinaria' },
+                { data: 'serie' },
+                { data: 'Marca' },
+                { data: 'TipoMaquinaria' },
+                { data: 'Modelo' },
+                { data: 'Cliente' },
+                { data: 'Concepto' },
+                { data: 'TotalHorasReales' },
+                { data: 'TotalHorasFacturables' },
+                { data: 'CostoNeto' },
+                { data: 'PrecioVentaNeto' },
+                {
+                    "className":      'algleft',
+                    "orderable":      true,
+                    "data":           'comentario',
+                    "defaultContent": ''
+                }
             ],
             columnDefs: [
                 { 'title': 'Imagen', 'targets': 0},
-                { 'title': 'maquinaria', 'targets': 1},
-                { 'title': 'Horas MO', 'targets': 2},
-                { 'title': 'Horas MO Bitacora', 'targets': 3},
-                { 'title': 'Costo MO', 'targets': 4},
-                { 'title': 'Costo compra', 'targets': 5},
-                { 'title': 'Acondicionamiento', 'targets': 6}
+                { 'title': 'Caso','width': '70px', 'targets': 1},
+                { 'title': 'Estatus','width': '70px', 'targets': 2},
+                { 'title': 'TipoServicio','width': '70px', 'targets': 3},
+                { 'title': 'FechaRecepcion','width': '70px', 'targets': 4},
+                { 'title': 'FechaCompromiso','width': '70px', 'targets': 5},
+                { 'title': 'Id_Maquinaria','width': '70px', 'targets': 6},
+                { 'title': 'Serie','width': '70px', 'targets': 7},
+                { 'title': 'Marca','width': '70px', 'targets': 8},
+                { 'title': 'TipoMaquinaria','width': '70px', 'targets': 9},
+                { 'title': 'Modelo','width': '70px', 'targets': 10},
+                { 'title': 'Cliente','width': '120px', 'targets': 11},
+                { 'title': 'Concepto','width': '70px', 'targets': 12},
+                { 'title': 'TotalHorasReales','width': '70px', 'targets': 13},
+                { 'title': 'TotalHorasFacturables','width': '70px', 'targets': 14},
+                { 'title': 'CostoNeto','width': '70px', 'targets': 15},
+                { 'title': 'PrecioVentaNeto','width': '70px', 'targets': 16},
+                { 'title': 'Comentario','width': '70px', 'targets': 17},
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Id_Maquinaria});
                 $(row).addClass('maquinaria');
                 $(row).children("td.img_maq").css('background', 'url("images/'+data.Id_Maquinaria+'.jpg") center no-repeat / cover');
+                /*
                 $(row).children("td.img_maq").css('height', '150px');
                 $(row).children("td.img_maq").css('width', '150px');
+                */
             },
             dom: 'lfBrtip',    
             paging: false,
@@ -199,8 +228,44 @@ try{
                 }
             },
             'scrollY':        '60vh',
+            'scrollX':        'true',
             'scrollCollapse': true,
-            'paging':         false
+            'paging':         false,
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+
+                    var select = $('<select><option value="">Seleciona</option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        if(j>1){
+                            select.append( '<option value="'+d+'" width="auto">'+d+'</option>' )
+                        }
+                        else{
+
+                        }
+                    } );
+                } );
+            }
+        } );
+        $('#grid tbody').on( 'click', 'tr', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
         } );
     } );
     </script>

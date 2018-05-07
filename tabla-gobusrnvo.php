@@ -3,44 +3,38 @@
 try{ 
     
     if ($_POST){
-        
-        $Ejercicio =  $_POST["TxtEjercicio"]; 
-        $Mes =  $_POST["TxtMes"]; 
-
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         //parametros de la llamada
         $parametros = array();
-        $parametros['Empresa'] = 'TAYCOSA';
-        $parametros['Mes'] = $Mes;
-        $parametros['Ejercicio'] = $Ejercicio;
-        //ini_set("soap.wsdl_cache_enabled", "0");
-        //Invocación al web service
-        $WS = new SoapClient($WebService, $parametros);
+        $parametros['sId_Empresa'] = 'TAYCOSA';
+        $parametros['iId'] = 0;
+
+        $WS = new SoapClient($WebService);
         //recibimos la respuesta dentro de un objeto
-        //$result = $WS->Edoresultados($parametros);
-        //$xml = $result->EdoresultadosResult->any;
-        $result = $WS->edomplementoempventas($parametros);
-        $xml = $result->edomplementoempventasResult->any;
+        $result = $WS->UsuariosSelect($parametros);
+        $xml = $result->UsuariosSelectResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
-//echo $xml;
     }
-    else{}
+    else{
+
+    }
+
 } catch(SoapFault $e){
   var_dump($e);
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact nowrap' cellspacing='0' width='100%'><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot></table></div>"; 
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover compact' cellspacing='0' width='100%' ></table></div>";
 
-$arreglo = [];
-for($i=0; $i<count($Datos); $i++){
-    $arreglo[$i]=$Datos[$i];
-}
+	$arreglo = [];
+	for($i=0; $i<count($Datos); $i++){
+		$arreglo[$i]=$Datos[$i];
+	}
 
 ?>
 
-<script type="text/javascript"> 
+     <script type="text/javascript"> 
         var datos = 
         <?php 
             echo json_encode($arreglo);
@@ -60,37 +54,30 @@ for($i=0; $i<count($Datos); $i++){
          var table = $('#grid').DataTable({
             data:datos,
             columns: [
-                { data: 'Id_Vendedor' },
-                { data: 'Cve_Documento' },
-                { data: 'FechaPago' },
-                { data: 'Cliente' },
-                { data: 'Concepto' },
-                { data: 'Subtotal' }
+                { data: 'usuario' },
+                { data: 'contraseña' },
+                { data: 'nombre' },
+                { data: 'Perfil' },
+                { data: 'Grupo' },
+                { data: 'telefono' },
+                { data: 'Correo' },
+                { data: 'PassC' },
+                { data: 'Fum' }
             ],
             columnDefs: [
-                { 'title': 'VENDEDOR', 'targets': 0},
-                { 'title': 'CLAVE DOCTO', 'targets': 1},
-                { 'title': 'FECHA PAGO', 'targets': 2},
-                { 'title': 'CLIENTE', 'targets': 3},
-                { 'title': 'CONCEPTO', 'targets': 4},
-                { 'title': 'SUBTOTAL', 'targets': 5}
+                { 'title': 'USUARIO', 'targets': 0},
+                { 'title': 'PASS', 'targets': 1},
+                { 'title': 'NOMBRE', 'targets': 2},
+                { 'title': 'PERFIL', 'targets': 3},
+                { 'title': 'GRUPO', 'targets': 4},
+                { 'title': 'TELEFONO', 'targets': 5},
+                { 'title': 'CORREO', 'targets': 6},
+                { 'title': 'PASSCORREO', 'targets': 7},
+                { 'title': 'FECHA', 'targets': 8}
             ],
-            "createdRow": function ( row, data, index ) {
-                $(row).attr({ id:data.Id_ConceptoCtb});
-                $(row).addClass(data.REF);
-                if ( data.TF == 'T1' ) {
-                    $(row).addClass('T1');
-                }
-                else if ( data.TF == 'T2' ) {
-                    $(row).addClass('T2');
-                }
-                else if ( data.TF == 'T3' ) {
-                    $(row).addClass('T3');
-                }
-                else if ( data.TF == 'N' ) {
-                    $(row).addClass('N');
-                    $(row).hide();
-                }
+            'createdRow': function ( row, data, index ) {
+                $(row).attr({ id:data.id});
+                //$(row).addClass('mec');
             },
             dom: 'lfBrtip',    
             paging: false,
@@ -193,87 +180,12 @@ for($i=0; $i<count($Datos); $i++){
                 'oAria': {
                     'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
                     'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+                }
             },
             'scrollY':        '60vh',
+            'scrollX':        'true',
             'scrollCollapse': true,
             'paging':         false
-             },
-        "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api(), data;
-            var api_total = this.api(), data;
-            var api_abono = this.api(), data;
-            var api_vtas = this.api(), data;
-            
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
-            // Total over all pages
-            total_total = api_total
-                .column( 5 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-            // Total over all pages
-            total_abono = api_abono
-                .column( 5 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-            
-            // Total over all pages
-            total_vtas = api_vtas
-                .column( 4 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-
-            // Total over this page
-            pageTotal = api
-                .column( 3, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-
-            // Update footer
-            $( api_total.column( 5 ).footer() ).html('$'+ total_total.toFixed(2) );
-
-
-            var COMIR = this.api(), data;
-            var COMIM = this.api(), data;
-            var COMIVC = this.api(), data;
-            var COMIMO = this.api(), data;
-            var COMIMOP = this.api(), data;
-            var COMITRA = this.api(), data;
-            
-            /*
-            totalFinal= total33 + total34 + total35 + total36 + total37 + total38 
-            // Update footer
-            $( api.column( 38 ).footer() ).html(
-                '$'+ total38 +' total <br>' 
-                + '$' + totalFinal.toFixed(2) + ' total final'
-            );
-            
-            $("#TotalComisiones").val('$' + totalFinal.toFixed(2) + ' COMISION TOTAL');
-            */
-        }
         } );
     } );
-
-    $(function(){
-        $('.T1').click(function() {                
-            if ($('.N').css("display") != "none" ) {
-                $('.N').hide(); 
-            }else{
-                $('.N').show(); 
-            }
-        });
-    });
     </script>

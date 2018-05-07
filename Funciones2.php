@@ -263,14 +263,6 @@
         echo '<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.colVis.min.js"></script>';
         echo '<script type="text/javascript" src="js/modernizr.custom.js"></script>';
         echo '<script type="text/javascript" src="js/classie.js"></script>';
-        echo '<script type="text/javascript" src="js/canvasjs.min.js"></script>';
-    }
-
-    function GraphScript(){
-        echo '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>';
-        echo '<script type="text/javascript" src="jquery.min.js"></script>';
-        echo '<script type="text/javascript" src="js/bootstrap.js"></script>';
-        echo '<script type="text/javascript" src="js/canvasjs.min.js"></script>';
     }
 
     function Barra(){

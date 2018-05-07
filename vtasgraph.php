@@ -3,16 +3,18 @@
 <html class="no-js">
 
 <?php include("Funciones.php"); ?>
-<?php echo Cabecera('Reporte de edos. ingresos empleados taller'); ?>
+<?php echo Cabecera('Ventas netas (sin IVA)'); ?>
 <?php
-    $TituloPantalla = 'Reporte de edos. ingresos empleados taller';    
+    $TituloPantalla = 'Ventas netas (sin IVA)';  
+	//$Arreglo = array("Nombre","Saldo");
+	//echo PasaArreglo($Arreglo);
 ?>
 
     <body>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h6 id="cabecera">
-                    <?php ECHO $TituloPantalla; /*Incluir modal nvo*/?>
+                    <?php echo $TituloPantalla; /*Incluir modal nvo*/?>
                 </h6>
             </div>
             <div class="panel-body">
@@ -26,7 +28,7 @@
                         <select id="TxtMes" name="TxtMes" class="form-control">
                             <option value="1">Enero</option>
                             <option value="2">Febrero</option>
-                            <option value="3">Marzo</option>
+                            <option value="2">Marzo</option>
                             <option value="4">Abril</option>
                             <option value="5">Mayo</option>
                             <option value="6">Junio</option>
@@ -38,43 +40,41 @@
                             <option value="12">Diciembre</option>
                         </select>
                     </div>
-
+					  <div class="form-group">
+						  <label for="inputFechaIni">Moneda:</label>
+						  <select id="CmbMoneda" name="CmbMoneda" class="form-control">
+							  <option>PESOS</option>
+							  <option>DOLARES</option>
+						  </select>
+					  </div>
+                    <div class="form-group">
+                        <label for="inputFechaIni">Ejercicio:</label>
+                        
+                    </div>
                     <button type="submit" id="btnEnviar" class="btn btn-primary btn-sm" onMouseOver="">Consultar</button>
                 </form>
                 <div class="controles form-horizontal">
 
                 </div>
-                <div class="respuesta">
-                </div>
+                <div class="respuesta"></div>
+                <div class="vtasdetalles"></div>
+                <span id="TotalFac"></span>
+                <div class="vtasfacturas"></div>
 				<?php echo CargaGif();?>
             </div>
         </div>
+        <?php echo GraphScript(); ?>
     </body>
-
-    <?php echo Script(); ?>
-
-    <script type="text/javascript"> 
-        
-        $(document).ready(function() {
-            var table = $('#grid').DataTable({
-                scrollY: 200,
-                scrollX: true
-            } );
-        } );
-
-    </script>
 
     <script type="text/javascript">
         $(function() {
-
             $("form").on('submit', function(e) {
-
                 e.preventDefault();
 				$('#CargaGif').show();
                 $('#btnEnviar').attr('disabled', 'disabled')
                 $.ajax({
                     type: "POST",
-                    url: 'tabla-edoingemptaller.php',
+                    url: 'tabla-vtasgraph.php',
                     data: $("form").serialize(), // Adjuntar los campos del formulario enviado.
                     success: function(data) {
 						$('#CargaGif').hide();
@@ -88,20 +88,9 @@
                         alert('Algo salio mal :S');
                     }
                 });
-
                 return false; // Evitar ejecutar el submit del formulario.
             });
         });
-
-        $('.Seleccionado').dblclick(function() {
-            var id = $(this).attr("data-id");
-            var name = $(this).attr("data-name");
-            $("#TxtCliente").val(id);
-            $("#title").html("Reporte cliente - " + id + " " + name);
-            $("#cabecera").html("Reporte cliente - " + id + " " + name);
-            $('#myModal').modal('hide');
-        });
-
     </script>
 
 </html>

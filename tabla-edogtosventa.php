@@ -6,7 +6,6 @@ try{
         
         $Ejercicio =  $_POST["TxtEjercicio"]; 
         $Mes =  $_POST["TxtMes"]; 
-
         $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
         //parametros de la llamada
         $parametros = array();
@@ -19,8 +18,8 @@ try{
         //recibimos la respuesta dentro de un objeto
         //$result = $WS->Edoresultados($parametros);
         //$xml = $result->EdoresultadosResult->any;
-        $result = $WS->edomplementoempventas($parametros);
-        $xml = $result->edomplementoempventasResult->any;
+        $result = $WS->edogatosventas($parametros);
+        $xml = $result->edogatosventasResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
 //echo $xml;
@@ -31,7 +30,7 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact nowrap' cellspacing='0' width='100%'><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot></table></div>"; 
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact nowrap' cellspacing='0' width='100%'></table></div>"; 
 
 $arreglo = [];
 for($i=0; $i<count($Datos); $i++){
@@ -60,37 +59,54 @@ for($i=0; $i<count($Datos); $i++){
          var table = $('#grid').DataTable({
             data:datos,
             columns: [
-                { data: 'Id_Vendedor' },
-                { data: 'Cve_Documento' },
-                { data: 'FechaPago' },
-                { data: 'Cliente' },
-                { data: 'Concepto' },
-                { data: 'Subtotal' }
+                { data: 'ConceptoCtb' },
+                { data: 'Mes_Actual' },
+                { data: 'Mes_Anterior' },
+                { data: 'Variacion' },
+                { data: 'Acumulado_ene' },
+                { data: 'Prom_mensual' },
+                { data: 'Ingresos_gen' },
+                { data: 'Util_per_generada' },
+                { data: 'Ano_Act' },
+                { data: 'Ano_Ant' }
             ],
             columnDefs: [
-                { 'title': 'VENDEDOR', 'targets': 0},
-                { 'title': 'CLAVE DOCTO', 'targets': 1},
-                { 'title': 'FECHA PAGO', 'targets': 2},
-                { 'title': 'CLIENTE', 'targets': 3},
-                { 'title': 'CONCEPTO', 'targets': 4},
-                { 'title': 'SUBTOTAL', 'targets': 5}
+                { 'title': 'CONCEPTO', 'targets': 0},
+                { 'title': 'MES ACTUAL', 'targets': 1},
+                { 'title': 'MES ANTERIOR', 'targets': 2},
+                { 'title': 'VARIACION', 'targets': 3},
+                { 'title': 'ACUMULADO ENERO', 'targets': 4},
+                { 'title': 'PROMEDIO MENSUAL', 'targets': 5},
+                { 'title': 'INGRESOS GEN', 'targets': 6},
+                { 'title': 'UTIL/PER GEN', 'targets': 7},
+                { 'title': 'AÑO ACTUAL', 'targets': 8},
+                { 'title': 'AÑO ANT', 'targets': 9}
             ],
             "createdRow": function ( row, data, index ) {
                 $(row).attr({ id:data.Id_ConceptoCtb});
                 $(row).addClass(data.REF);
-                if ( data.TF == 'T1' ) {
-                    $(row).addClass('T1');
+                /*if ( data.TF == 'N1' ) {
+                    $(row).addClass('N1');
                 }
-                else if ( data.TF == 'T2' ) {
-                    $(row).addClass('T2');
+                else if ( data.TF == 'N2' ) {
+                    $(row).addClass('N2');
                 }
-                else if ( data.TF == 'T3' ) {
-                    $(row).addClass('T3');
+                else if ( data.TF == 'N3' ) {
+                    $(row).addClass('N3');
+                    $(row).hide();
+                }
+                else if ( data.TF == 'N4' ) {
+                    $(row).addClass('N4');
+                    $(row).hide();
+                }
+                else if ( data.TF == 'N5' ) {
+                    $(row).addClass('N5');
+                    $(row).hide();
                 }
                 else if ( data.TF == 'N' ) {
                     $(row).addClass('N');
                     $(row).hide();
-                }
+                }*/
             },
             dom: 'lfBrtip',    
             paging: false,
@@ -193,86 +209,29 @@ for($i=0; $i<count($Datos); $i++){
                 'oAria': {
                     'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
                     'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+                }
             },
             'scrollY':        '60vh',
-            'scrollCollapse': true,
+            'scrollX': true,
             'paging':         false
-             },
-        "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api(), data;
-            var api_total = this.api(), data;
-            var api_abono = this.api(), data;
-            var api_vtas = this.api(), data;
-            
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
-            // Total over all pages
-            total_total = api_total
-                .column( 5 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-            // Total over all pages
-            total_abono = api_abono
-                .column( 5 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-            
-            // Total over all pages
-            total_vtas = api_vtas
-                .column( 4 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-
-            // Total over this page
-            pageTotal = api
-                .column( 3, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-
-            // Update footer
-            $( api_total.column( 5 ).footer() ).html('$'+ total_total.toFixed(2) );
-
-
-            var COMIR = this.api(), data;
-            var COMIM = this.api(), data;
-            var COMIVC = this.api(), data;
-            var COMIMO = this.api(), data;
-            var COMIMOP = this.api(), data;
-            var COMITRA = this.api(), data;
-            
-            /*
-            totalFinal= total33 + total34 + total35 + total36 + total37 + total38 
-            // Update footer
-            $( api.column( 38 ).footer() ).html(
-                '$'+ total38 +' total <br>' 
-                + '$' + totalFinal.toFixed(2) + ' total final'
-            );
-            
-            $("#TotalComisiones").val('$' + totalFinal.toFixed(2) + ' COMISION TOTAL');
-            */
-        }
         } );
     } );
 
     $(function(){
-        $('.T1').click(function() {                
+        /*
+        $('.N4').click(function() {                
             if ($('.N').css("display") != "none" ) {
                 $('.N').hide(); 
             }else{
                 $('.N').show(); 
+            }
+        });*/
+        $('#grid tr').click(function() {
+            var ids = $( this ).attr("id");
+            if ($('.'+ids).css("display") != "none" ) {
+                $('.'+ids).hide(); 
+            }else{
+                $('.'+ids).show(); 
             }
         });
     });

@@ -54,6 +54,7 @@
                         $('#btnEnviar').removeAttr('disabled');
                         $(".respuesta").html(data); // Mostrar la respuestas del script PHP.
                         $(".respuesta").show();
+                        $('#grid').DataTable().draw();
                     },
                     error: function(error) {
 						$('#CargaGif').hide();

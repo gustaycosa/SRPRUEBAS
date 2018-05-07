@@ -98,7 +98,9 @@ try{
                 $(row).attr({ id:data.Id_Maquinaria});
                 $(row).addClass('maquinaria');
                 $(row).children("td.img_maq").css('background', 'url("images/'+data.Id_Maquinaria+'.jpg") center no-repeat / cover');
+                /*
                 $(row).children("td.img_maq").css('height', '100px');
+                */
             },
             dom: 'lfBrtip',    
             paging: false,

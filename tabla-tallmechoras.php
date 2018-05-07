@@ -104,15 +104,15 @@ try{
             columnDefs: [
                 { 'title': 'Clave', 'targets': 0},
                 { 'title': 'Nombre Mecanico', 'targets': 1},
-                { 'title': 'Hrs Reales', 'targets': 2},
-                { 'title': 'Hrs Facturables', 'targets': 3},
-                { 'title': 'Hrs Servicio', 'targets': 4},
-                { 'title': 'Hrs Mtto', 'targets': 5},
-                { 'title': 'Hrs Permisos', 'targets': 6},
-                { 'title': 'Hrs Capacitacion', 'targets': 7},
-                { 'title': 'Hrs Traslados', 'targets': 8},
-                { 'title': 'Hrs ApoyoDemo', 'targets': 9},
-                { 'title': 'Hrs ApoyoTaller', 'targets': 10}
+                { 'title': 'Hrs Reales', 'width': '70px', 'targets': 2},
+                { 'title': 'Hrs Facturables', 'width': '70px', 'targets': 3},
+                { 'title': 'Hrs Servicio', 'width': '70px', 'targets': 4},
+                { 'title': 'Hrs Mtto', 'width': '70px', 'targets': 5},
+                { 'title': 'Hrs Permisos', 'width': '70px', 'targets': 6},
+                { 'title': 'Hrs Capacitacion', 'width': '70px', 'targets': 7},
+                { 'title': 'Hrs Traslados', 'width': '70px', 'targets': 8},
+                { 'title': 'Hrs ApoyoDemo', 'width': '70px', 'targets': 9},
+                { 'title': 'Hrs ApoyoTaller', 'width': '70px', 'targets': 10}
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Cve_Empleado,nombre:data.Nombre});

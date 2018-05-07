@@ -63,6 +63,7 @@ $Datos = $obj->NewDataSet->Table;
     
  ?>
     <script type="text/javascript"> 
+        var contador = 0;
         $(document).on('click','.close',function(){
             //id del item menu
             var ID = $( this ).attr("name");
@@ -100,15 +101,17 @@ $Datos = $obj->NewDataSet->Table;
         });
         
         $(document).on('click','.list-group-item',function(){
+            
 			$("#principal iframe").hide();
 			$("#navbar > a").removeClass('vna-act').addClass('vna-min');
             var IDFRM = $( this ).attr("id");
-            var modal2 = "<iframe id='ifm"+IDFRM+"' name='"+IDFRM+"' frameborder='0' class='col-sm-12'></iframe>";
-            var ventana = "<a id='"+IDFRM+"' class='vna-act'>"+IDFRM+"<button class='close' name='"+IDFRM+"'>x</button></a>";
+            contador = contador + 1;
+            var modal2 = "<iframe id='ifm"+IDFRM+"_"+contador+"' name='"+IDFRM+"' frameborder='0' class='col-sm-12'></iframe>";
+            var ventana = "<a id='"+IDFRM+"_"+contador+"' class='vna-act'>"+IDFRM+"<button class='close' name='"+IDFRM+"_"+contador+"'>x</button></a>";
             $( "#principal" ).append( modal2 );
             $( "#navbar" ).append( ventana );
-            $("#"+IDFRM).attr('class').replace('vna-min', 'vna-act');
-            $( "#ifm"+IDFRM ).addClass('ifmOpen');
+            $("#"+IDFRM+"_"+contador).attr('class').replace('vna-min', 'vna-act');
+            $( "#ifm"+IDFRM+"_"+contador ).addClass('ifmOpen');
             
             $("#navmenu").hide();
             $("#navmenu").css("left","-300px");

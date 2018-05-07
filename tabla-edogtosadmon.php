@@ -78,21 +78,29 @@ for($i=0; $i<count($Datos); $i++){
                 { 'title': 'AÑO ANT', 'targets': 9}
             ],
             "createdRow": function ( row, data, index ) {
-                /*$(row).attr({ id:data.Id_ConceptoCtb});
+                $(row).attr({ id:data.Id_ConceptoCtb});
                 $(row).addClass(data.REF);
-                if ( data.TF == 'T1' ) {
-                    $(row).addClass('T1');
+                if ( data.TF == 'N1' ) {
+                    $(row).addClass('N1');
                 }
-                else if ( data.TF == 'T2' ) {
-                    $(row).addClass('T2');
+                else if ( data.TF == 'N2' ) {
+                    $(row).addClass('N2');
                 }
-                else if ( data.TF == 'T3' ) {
-                    $(row).addClass('T3');
+                else if ( data.TF == 'N3' ) {
+                    $(row).addClass('N3');
+                }
+                else if ( data.TF == 'N4' ) {
+                    $(row).addClass('N4');
+                    $(row).hide();
+                }
+                else if ( data.TF == 'N5' ) {
+                    $(row).addClass('N5');
+                    //$(row).hide();
                 }
                 else if ( data.TF == 'N' ) {
                     $(row).addClass('N');
-                    $(row).hide();
-                }*/
+                    //$(row).hide();
+                }
             },
             dom: 'lfBrtip',    
             paging: false,
@@ -198,19 +206,26 @@ for($i=0; $i<count($Datos); $i++){
                 }
             },
             'scrollY':        '60vh',
-            'scrollCollapse': true,
+            'scrollX': true,
             'paging':         false
         } );
     } );
-
     $(function(){
-/*
-        $('.T1').click(function() {                
+        /*
+        $('.N4').click(function() {                
             if ($('.N').css("display") != "none" ) {
                 $('.N').hide(); 
             }else{
                 $('.N').show(); 
             }
         });*/
+        $('#grid tr').click(function() {
+            var ids = $( this ).attr("id");
+            if ($('.'+ids).css("display") != "none" ) {
+                $('.'+ids).hide(); 
+            }else{
+                $('.'+ids).show(); 
+            }
+        });
     });
     </script>

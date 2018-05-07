@@ -26,7 +26,7 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot></table></div>";
 
 	$arreglo = [];
 	for($i=0; $i<count($Datos); $i++){
@@ -87,23 +87,25 @@ try{
             columnDefs: [
                 { 'title': 'Imagen', 'targets': 0},
                 { 'title': 'Alta', 'targets': 1},
-                { 'title': 'Marca', 'targets': 2},
+                { 'title': 'Marca', 'width': '70px', 'targets': 2},
                 { 'title': 'Tipo', 'targets': 3},
-                { 'title': 'Modelo', 'targets': 4},
-                { 'title': 'Serie', 'targets': 5},
-                { 'title': 'Costo compra', 'targets': 6},
-                { 'title': 'Acondicionamiento', 'targets': 7},
-                { 'title': 'Horas MO', 'targets': 8},
-                { 'title': 'Costo MO', 'targets': 9},
-                { 'title': 'Costo Final', 'targets': 10},
+                { 'title': 'Modelo', 'width': '70px', 'targets': 4},
+                { 'title': 'Serie', 'width': '70px', 'targets': 5},
+                { 'title': 'Costo compra', 'width': '70px', 'targets': 6},
+                { 'title': 'Acond.', 'width': '70px', 'targets': 7},
+                { 'title': 'Horas MO', 'width': '70px', 'targets': 8},
+                { 'title': 'Costo MO', 'width': '70px', 'targets': 9},
+                { 'title': 'Costo Final', 'width': '70px', 'targets': 10},
                 { 'title': 'Ubicacion', 'targets': 11}
             ],
             'createdRow': function ( row, data, index ) {
                 $(row).attr({ id:data.Id_Maquinaria});
                 $(row).addClass('maquinaria');
                 $(row).children("td.img_maq").css('background', 'url("images/'+data.Id_Maquinaria+'.jpg") center no-repeat / cover');
+                /*
                 $(row).children("td.img_maq").css('height', '150px');
                 $(row).children("td.img_maq").css('width', '150px');
+                */
             },
             dom: 'lfBrtip',    
             paging: false,
@@ -209,8 +211,34 @@ try{
                 }
             },
             'scrollY':        '60vh',
-            'scrollCollapse': true,
-            'paging':         false
+            'scrollX':        'true',
+            'paging':         false,
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+
+                    var select = $('<select><option value="Selecciona">Selecciona</option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        if(j>1){
+                            select.append( '<option value="'+d+'" width="auto">'+d+'</option>' )
+                        }
+                        else{
+
+                        }
+                    } );
+                } );
+            }
         } );
     } );
     </script>

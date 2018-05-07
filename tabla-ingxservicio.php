@@ -1,8 +1,5 @@
 <?php
 
-$Columnas = array("ID_SUCURSAL","CONCEPTO","DEBE","HABER","INGRESOS","DEVOLUCION","REFACT","DESCVENTAS","NETO","TF");
-$titulos = array("ID_SUCURSAL","CONCEPTO","DEBE","HABER","INGRESOS","DEVOLUCION","REFACT","DESCVENTAS","NETO","TF");
-
 try{ 
     
     if ($_POST){
@@ -34,90 +31,253 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact nowrap' cellspacing='0' width='100%' style='white-space: nowrap;'><thead><tr>"; 
-                echo "<th>".$titulos[1]."</th>";
-                echo "<th>".$titulos[2]."</th>";
-                echo "<th>".$titulos[3]."</th>";
-                echo "<th>".$titulos[4]."</th>";
-                echo "<th>".$titulos[5]."</th>";
-                echo "<th>".$titulos[6]."</th>";
-                echo "<th>".$titulos[7]."</th>";
-                echo "<th>".$titulos[8]."</th>";
-                echo "<th>".$titulos[9]."</th>";
-            echo "</tr></thead><tfoot><tr>";
-                echo "<th>".$titulos[1]."</th>";
-                echo "<th>".$titulos[2]."</th>";
-                echo "<th>".$titulos[3]."</th>";
-                echo "<th>".$titulos[4]."</th>";
-                echo "<th>".$titulos[5]."</th>";
-                echo "<th>".$titulos[6]."</th>";
-                echo "<th>".$titulos[7]."</th>";
-                echo "<th>".$titulos[8]."</th>";
-                echo "<th>".$titulos[9]."</th>";
-            echo "</tr></tfoot><tbody>";
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact nowrap' cellspacing='0' width='100%'><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot></table></div>"; 
 
-     for($i=0; $i<count($Datos); $i++){
-       
-         $fila = $Datos[$i]->$Columnas[9];
-
-         echo "<tr>";
-
-         if($fila=="T1"){
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[1]."</td>";
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[2]."</td>";
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[3]."</td>";
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[4]."</td>";
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[5]."</td>"; 
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[6]."</td>";
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[7]."</td>";
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[8]."</td>";
-             echo "<td class='t1'>".$Datos[$i]->$Columnas[9]."</td>"; 
-         }
-         if($fila=="T2"){
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[1]."</td>";
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[2]."</td>";
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[3]."</td>";
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[4]."</td>";
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[5]."</td>"; 
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[6]."</td>";
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[7]."</td>";
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[8]."</td>";
-             echo "<td class='t2'>".$Datos[$i]->$Columnas[9]."</td>"; 
-         }
-         if($fila=="T3"){
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[1]."</td>";
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[2]."</td>";
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[3]."</td>";
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[4]."</td>";
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[5]."</td>"; 
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[6]."</td>";
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[7]."</td>";
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[8]."</td>";
-             echo "<td class='t3'>".$Datos[$i]->$Columnas[9]."</td>"; 
-         }
-        if($fila=="N"){
-             echo "<td>".$Datos[$i]->$Columnas[1]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[2]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[3]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[4]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[5]."</td>"; 
-             echo "<td>".$Datos[$i]->$Columnas[6]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[7]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[8]."</td>";
-             echo "<td>".$Datos[$i]->$Columnas[9]."</td>"; 
-         }
-            
-
-        echo "</tr>";
-     } 
-
-      echo "</tbody></table></div>";
-        //echo number_format($Suma, 2, ',', ' ');
+$arreglo = [];
+for($i=0; $i<count($Datos); $i++){
+    $arreglo[$i]=$Datos[$i];
+}
 
 ?>
 
-    <script type="text/javascript"> 
-        
-        <?php echo GrdRpt('Edo-IngSrv_'.$Mes."-".$Ejercicio); ?>
+<script type="text/javascript"> 
+        var datos = 
+        <?php 
+            echo json_encode($arreglo);
+        ?>
+		;
+		<?php
+/*
+			$sGridNomb = '#gridfact';
+			$sWsNomb = 'vtas_netasfact';
+			$aColumnas = array("Fecha","Id_Sucursal","Serie","Folio","Id_cliente","Nombre","Concepto","Total");
+			$aTitulos =  array("Fecha","Id_Sucursal","Serie","Folio","Id_cliente","Nombre","Concepto","Total");
+			echo GrdRptShort($sGridNomb,$sWsNomb,$aColumnas,$aTitulos);
+            */
+		?>
 
+ $(document).ready(function() {
+         var table = $('#grid').DataTable({
+            data:datos,
+            columns: [
+                { data: 'CONCEPTO' },
+                { data: 'DEBE' },
+                { data: 'HABER' },
+                { data: 'INGRESOS' },
+                { data: 'DEVOLUCION' },
+                { data: 'REFACT' },
+                { data: 'DESCVENTAS' },
+                { data: 'NETO' }
+            ],
+            columnDefs: [
+                { 'title': 'CONCEPTO', 'targets': 0},
+                { 'title': 'DEBE', 'targets': 1},
+                { 'title': 'HABER', 'targets': 2},
+                { 'title': 'INGRESOS', 'targets': 3},
+                { 'title': 'DEVOLUCION', 'targets': 4},
+                { 'title': 'REFACTURACION', 'targets': 5},
+                { 'title': 'DESC VTAS', 'targets': 6},
+                { 'title': 'NETO', 'targets': 7}
+            ],
+            "createdRow": function ( row, data, index ) {
+                $(row).attr({ id:data.Id_ConceptoCtb});
+                $(row).addClass(data.REF);
+                if ( data.TF == 'T1' ) {
+                    $(row).addClass('T1');
+                }
+                else if ( data.TF == 'T2' ) {
+                    $(row).addClass('T2');
+                }
+                else if ( data.TF == 'T3' ) {
+                    $(row).addClass('T3');
+                }
+                else if ( data.TF == 'N' ) {
+                    $(row).addClass('N');
+                    $(row).hide();
+                }
+            },
+            dom: 'lfBrtip',    
+            paging: false,
+            searching: true,
+            ordering: false,
+            buttons: [
+                {
+                    extend: 'copy',
+                    message: 'PDF created by PDFMake with Buttons for DataTables.',
+                    text: 'Copiar',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'PDF',
+                    customize: function ( doc ) {
+                        // Splice the image in after the header, but before the table
+                        doc.content.splice( 1, 0, {
+                            margin: [ 0, 0, 0, 12 ],
+                            alignment: 'center'
+                        } );
+                        // Data URL generated by http://dataurl.net/#dataurlmaker
+                    },
+                    filename: 'vtas_netasfact',
+                    extension: '.pdf',       
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'CSV',
+                    header:'true',
+                    filename: 'vtas_netasfact',
+                    extension: '.csv',       
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+                {
+                    extend: 'excel',
+                    message: 'PDF creado desde el sistema en linea del tayco.',
+                    text: 'XLS',
+                    filename: 'vtas_netasfact',
+                    extension: '.xlsx', 
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            page: 'all'
+                        }
+                    },
+                    customize: function( xlsx ) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        $('row:first c', sheet).attr( 's', '42' );
+                    }
+                },
+                {
+                    extend: 'print',
+                    message: 'PDF creado desde el sistema en linea del tayco.',
+                    text: 'Imprimir',
+                    exportOptions: {
+                        stripHtml: false,
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
+                },
+            ],
+            'pagingType': 'full_numbers',
+            'lengthMenu': [[-1], ['Todo']],
+            'language': {
+                'sProcessing':    'Procesando...',
+                'sLengthMenu':    'Mostrar _MENU_ registros',
+                'sZeroRecords':   'No se encontraron resultados',
+                'sEmptyTable':    'Ningún dato disponible en esta tabla',
+                'sInfo':          'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+                'sInfoEmpty':     'Mostrando registros del 0 al 0 de un total de 0 registros',
+                'sInfoFiltered':  '(filtrado de un total de _MAX_ registros)',
+                'sInfoPostFix':   '',
+                'sSearch':        'Buscar:',
+                'sUrl':           '',
+                'sInfoThousands':  ',',
+                'sLoadingRecords': 'Cargando...',
+                'oPaginate': {
+                    'sFirst':    'Primero',
+                    'sLast':    'Último',
+                    'sNext':    'Siguiente',
+                    'sPrevious': 'Anterior'
+                },
+                'oAria': {
+                    'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
+                    'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+            },
+            'scrollY':        '60vh',
+            'scrollCollapse': true,
+            'paging':         false
+             },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var api_total = this.api(), data;
+            var api_abono = this.api(), data;
+            var api_vtas = this.api(), data;
+            
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            // Total over all pages
+            total_total = api_total
+                .column( 7 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            // Total over all pages
+            total_abono = api_abono
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            
+            // Total over all pages
+            total_vtas = api_vtas
+                .column( 4 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Total over this page
+            pageTotal = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Update footer
+            $( api_total.column( 7 ).footer() ).html('$'+ total_total.toFixed(2) );
+
+
+            var COMIR = this.api(), data;
+            var COMIM = this.api(), data;
+            var COMIVC = this.api(), data;
+            var COMIMO = this.api(), data;
+            var COMIMOP = this.api(), data;
+            var COMITRA = this.api(), data;
+            
+            /*
+            totalFinal= total33 + total34 + total35 + total36 + total37 + total38 
+            // Update footer
+            $( api.column( 38 ).footer() ).html(
+                '$'+ total38 +' total <br>' 
+                + '$' + totalFinal.toFixed(2) + ' total final'
+            );
+            
+            $("#TotalComisiones").val('$' + totalFinal.toFixed(2) + ' COMISION TOTAL');
+            */
+        }
+        } );
+    } );
+
+    $(function(){
+        $('.T2').click(function() {                
+            if ($('.N').css("display") != "none" ) {
+                $('.N').hide(); 
+            }else{
+                $('.N').show(); 
+            }
+        });
+    });
     </script>

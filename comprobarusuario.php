@@ -13,7 +13,7 @@ $contrasena = $_POST['password'];
 
 $WebService="http://dwh.taycosa.mx/WEB_SERVICES/DataLogs.asmx?wsdl";
 
-$Columnas = array("Id_Usuario","nombre","Email","id_empresa","Id_Perfil","Perfil","TipoPerfil","Id_Grupo","Grupo");
+$Columnas = array("Id_Usuario","nombre","Email","id_empresa","Id_Perfil","Perfil","TipoPerfil","Id_Grupo","Grupo","id_Vendedor");
 
 //parametros de la llamada
 $parametros = array();
@@ -46,7 +46,8 @@ $tipoperfil = $Datos[0]->$Columnas[6];
 	$_SESSION['Email'] = $Datos[0]->$Columnas[2];
     $_SESSION['Empresa'] = $Datos[0]->$Columnas[5];
 	$_SESSION['Autenticado'] ='SI';
-	
+	$_SESSION['Id_ventas'] = $Datos[0]->$Columnas[5];
+    $ventas = $Datos[0]->$Columnas[5];
     include("principal3.php");
  }
 ?>

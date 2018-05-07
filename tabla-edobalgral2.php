@@ -16,10 +16,8 @@ try{
         //Invocación al web service
         $WS = new SoapClient($WebService, $parametros);
         //recibimos la respuesta dentro de un objeto
-        //$result = $WS->Edoresultados($parametros);
-        //$xml = $result->EdoresultadosResult->any;
-        $result = $WS->edoventas($parametros);
-        $xml = $result->edoventasResult->any;
+        $result = $WS->edobalancegeneral($parametros);
+        $xml = $result->edobalancegeneralResult->any;
         $obj = simplexml_load_string($xml);
         $Datos = $obj->NewDataSet->Table;
 //echo $xml;
@@ -30,12 +28,14 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact nowrap' cellspacing='0' width='100%'></table></div>"; 
+        <table id='grid' class='table table-condensed display compact nowrap' cellspacing='0' width='100%'></table></div>";
 
 $arreglo = [];
 for($i=0; $i<count($Datos); $i++){
     $arreglo[$i]=$Datos[$i];
 }
+        //print_r($arreglo);
+        //echo number_format($Suma, 2, ',', ' ');
 
 ?>
 
@@ -49,61 +49,35 @@ for($i=0; $i<count($Datos); $i++){
 
             var table = $('#grid').DataTable({
                 data:datos,
-				//array("Id_ConceptoCtb","ConceptoCtb","Ventas","Devoluciones","DevoxRefact","Descto","NCGAR","VENTASNETAS","CostoVentas","CostoGAR","CostoGNR","TOTAL_COSTO_VENTAS","TF");
                 columns: [
                     { data: "ConceptoCtb" },
-                    { data: "Ventas" },
-                    { data: "Devoluciones" },
-                    { data: "DevoxRefact" },
-                    { data: "Descto" },
-                    { data: "NCGAR" },
-                    { data: "VENTASNETAS" },
-                    { data: "CostoVentas" },
-                    { data: "CostoGAR" },
-                    { data: "CostoGNR" },
-                    { data: "TOTAL_COSTO_VENTAS" }
+                    { data: "Mes_Actual" },
+                    { data: "Mes_Anterior" },
+                    { data: "Acumulado_Act" },
+                    { data: "Acumulado_Ant" }
                 ],
-                columnDefs: [
-                    { 'title': 'CONCEPTO', 'targets': 0},
-                    { 'title': 'VENTAS', 'targets': 1},
-                    { 'title': 'DEVOLUCIONES', 'targets': 2},
-                    { 'title': 'DEVO POR REFAC', 'targets': 3},
-                    { 'title': 'VENTAS NETAS', 'targets': 4},
-                    { 'title': 'COSTO VENTAS', 'targets': 5},
-                    { 'title': 'COSTO GAR', 'targets': 6},
-                    { 'title': 'COSTO GNR', 'targets': 5},
-                    { 'title': 'TOTAL COSTO VTAS', 'targets': 6},
-                ],
+			    columnDefs: [
+				    { "title": "CONCEPTO CONTABLE", "targets": 0},
+					{ "title": "MES ACTUAL", "targets": 1},
+					{ "title": "MES ANTERIOR", "targets": 2},
+					{ "title": "ACUM.ACTUAL", "targets": 3},
+					{ "title": "ACUM.ANTERIOR", "targets": 4}
+			    ],
                 "createdRow": function ( row, data, index ) {
-                    
-                    var ref = '';
-                    //console.log(data);
+					$(row).attr({ id:data.Id_ConceptoCtb});
+					$(row).addClass(data.REF);
                     if ( data.TF == 'T1' ) {
-                        ref = data.ConceptoCtb;
                         $(row).addClass('T1');
-                        $(row).attr({
-                          //alt: "Beijing Brush Seller",
-                          //title: "photo by Kelly Clark",
-                          id:data.ConceptoCtb
-                        });
-                        //ref = data.ConceptoCtb;
                     }
                     else if ( data.TF == 'T2' ) {
                         $(row).addClass('T2');
-                        //$('td', row).addClass('T2');
                     }
                     else if ( data.TF == 'T3' ) {
                         $(row).addClass('T3');
                     }
                     else if ( data.TF == 'N' ) {
                         $(row).addClass('N');
-                        //$(row).hide();
-                        $(row).attr({
-                          //alt: "Beijing Brush Seller",
-                          //title: "photo by Kelly Clark",
-                          //ref:ref
-                          //ref:ref
-                        });
+                        $(row).hide();
                     }
                 },
                 dom: 'lfBrtip',    
@@ -209,7 +183,8 @@ for($i=0; $i<count($Datos); $i++){
                         'sSortDescending': ': Activar para ordenar la columna de manera descendente'
                     }
                 },
-                'scrollY': '60vh',
+                'scrollY': '300',
+				'scrollCollapse': true,
                 'scrollX': true,
                 'paging': false,
                 'responsive': true,
@@ -219,11 +194,12 @@ for($i=0; $i<count($Datos); $i++){
         //FUNCION DE PLATILLOS MENUS
         $(function(){
 
-            $('.T1').click(function() {                
-                if ($('.N').css("display") != "none" ) {
-                    $('.N').hide(); 
+            $('#grid tr').click(function() {
+				var ids = $( this ).attr("id");
+                if ($('.'+ids).css("display") != "none" ) {
+                    $('.'+ids).hide(); 
                 }else{
-                    $('.N').show(); 
+                    $('.'+ids).show(); 
                 }
             });
         });

@@ -190,6 +190,10 @@ body::-webkit-scrollbar-thumb {
     font-size: 11px;
     height: 50px;
 }
+
+.algleft{
+    text-align: left !important;
+}
 /*
 iframe{
         border-top: solid 35px black;

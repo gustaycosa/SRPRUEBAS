@@ -31,7 +31,7 @@ try{
 }
 
     echo "<div class='table-responsive'>
-        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ></table></div>";
+        <table id='grid' class='table table-striped table-bordered table-condensed table-hover display compact' cellspacing='0' width='100%' ><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot></table></div>";
 
 	$arreglo = [];
 	for($i=0; $i<count($Datos); $i++){
@@ -182,11 +182,78 @@ try{
                 'oAria': {
                     'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
                     'sSortDescending': ': Activar para ordenar la columna de manera descendente'
-                }
             },
             'scrollY':        '60vh',
             'scrollCollapse': true,
             'paging':         false
+            },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var api_total = this.api(), data;
+            var api_abono = this.api(), data;
+            var api_vtas = this.api(), data;
+            
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            // Total over all pages
+            total_total = api_total
+                .column( 7 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            // Total over all pages
+            total_abono = api_abono
+                .column( 6 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            
+            // Total over all pages
+            total_vtas = api_vtas
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Total over this page
+            pageTotal = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Update footer
+            $( api_total.column( 7 ).footer() ).html('$'+ total_total.toFixed(2) );
+            $( api_abono.column( 6 ).footer() ).html('$'+ total_abono.toFixed(2) );
+            $( api_vtas.column( 5 ).footer() ).html('$'+ total_vtas.toFixed(2) );
+
+            var COMIR = this.api(), data;
+            var COMIM = this.api(), data;
+            var COMIVC = this.api(), data;
+            var COMIMO = this.api(), data;
+            var COMIMOP = this.api(), data;
+            var COMITRA = this.api(), data;
+            
+            /*
+            totalFinal= total33 + total34 + total35 + total36 + total37 + total38 
+            // Update footer
+            $( api.column( 38 ).footer() ).html(
+                '$'+ total38 +' total <br>' 
+                + '$' + totalFinal.toFixed(2) + ' total final'
+            );
+            
+            $("#TotalComisiones").val('$' + totalFinal.toFixed(2) + ' COMISION TOTAL');
+            */
+        }
         } );
     } );
     </script>
